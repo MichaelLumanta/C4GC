@@ -1,0 +1,24 @@
+<ion-view view-title="Stored Report">
+<ion-content class="padding">
+
+<label class="item item-input">
+		<i class="icon ion-ios-search placeholder-icon"></i>
+		<input type="text" placeholder="Search Music" ng-model="search">
+</label>
+<div ng-controller='Search'>
+<div class="list">
+<div class="item item-icon-right" ng-repeat="item in items | filter:search">
+<label ng-model="studentId">{{item.StudentId}}</label>
+<br>
+<label ng-model="rep">{{item.description}}</label>
+
+<a class="button button-icon icon ion-android-delete" data-ng-click="remove($index)"ng-controller='TodoController' style="position: absolute; right: 50px;"></a>
+<a class="button button-icon icon ion-play" data-ng-click="add($item)"ng-controller='TodoController' ></a>
+
+</div>
+
+</div>
+</div>
+
+</ion-view>
+</ion-content>

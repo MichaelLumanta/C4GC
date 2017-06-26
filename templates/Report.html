@@ -1,0 +1,33 @@
+<ion-view view-title="Report">
+<ion-content class="padding">
+
+
+<div class="list" align="center">
+    <header>
+        Take a photo with your Android browser.
+    </header>
+    <div id="content"></div> 
+        
+                                     
+    <div class="container" ng-controller='TodoController'> 
+		<form class="todo-form "ng-submit="addReport()">
+		<input type="file" accept="image/*" id="input" name="input"> 
+		<br>
+		 <label class="item item-input">
+<textarea ng-model="report" placeholder="Enter Report Here/ Short Description" rows="6" cols="40">
+	
+		</textarea>
+  </label>
+		
+	 <label class="item item-input">
+   <input type="text" ng-model="studentId" placeholder="Student Number / Not a Student">
+  </label>
+	
+	<br>
+	<button type="submit" value="Send Report" class="button button-calm button-small button-block" style="border-radius:80px;"> Submit</button>
+	</form>
+</ion-view>
+</ion-content>
+
+	
+
