@@ -12,8 +12,10 @@ function updates(){$scope.saved=localStorage.getItem('reports');
 	$scope.items=(localStorage.getItem('reports')!=null)?JSON.parse($scope.saved):[{title:'',done:false}];
 };
 })
-.controller('TodoController',function($scope,$http,$state, $ionicHistory){
-
+.controller('TodoController',function($scope,$http,$state, $ionicHistory,){
+	$scope.saved=localStorage.getItem('reports');
+	$scope.reports=(localStorage.getItem('reports')!=null)?JSON.parse($scope.saved):[{title:'',done:false}];
+	localStorage.setItem('reports',JSON.stringify($scope.reports));
 		$scope.addReport1=function(){
 
 		 $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
@@ -75,14 +77,14 @@ function updates(){$scope.saved=localStorage.getItem('reports');
 	};
 
 	$scope.remove=function(item){
-		var index = $scope.reports.indexOf(item);
-	 $scope.reports.splice(index,1);
+
+	 $scope.reports.splice(item,1);
 	localStorage.setItem('reports', JSON.stringify($scope.reports));
 
 	};
 	$scope.add=function(item){
 		 var index = $scope.reports.indexOf(item);
-		$scope.reports.splice(index,1);
+		$localStorage.reports.splice(localStorage.reports.indexOf(item),1);
    localStorage.setItem('reports', JSON.stringify($scope.reports));
 	};
 })
