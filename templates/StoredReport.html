@@ -12,7 +12,7 @@
 <br>
 <label ng-model="rep">{{item.description}}</label>
 
-<a class="button button-icon icon ion-android-delete" data-ng-click="remove($index)"ng-controller='TodoController' style="position: absolute; right: 50px;"></a>
+<a class="button button-icon icon ion-android-delete" data-ng-click="remove($item)"ng-controller='TodoController' style="position: absolute; right: 50px;"></a>
 <a class="button button-icon icon ion-play" data-ng-click="add($item)"ng-controller='TodoController' ></a>
 
 </div>
