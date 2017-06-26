@@ -3,7 +3,7 @@
 
 <label class="item item-input">
 		<i class="icon ion-ios-search placeholder-icon"></i>
-		<input type="text" placeholder="Search Music" ng-model="search">
+		<input type="text" placeholder="Search Report" ng-model="search">
 </label>
 <div ng-controller='Search'>
 <div class="list">
@@ -12,8 +12,8 @@
 <br>
 <label ng-model="rep">{{item.description}}</label>
 
-<a class="button button-icon icon ion-android-delete" data-ng-click="remove($item)"ng-controller='TodoController' style="position: absolute; right: 50px;"></a>
-<a class="button button-icon icon ion-play" data-ng-click="add($item)"ng-controller='TodoController' ></a>
+<a class="button button-icon icon ion-android-delete" data-ng-click="remove(item)"ng-controller='TodoController' style="position: absolute; right:60px; width: 50px;"></a>
+<a class="button button-icon icon ion-play" data-ng-click="add(item)"ng-controller='TodoController' ></a>
 
 </div>
 

@@ -5,14 +5,14 @@ done();
 
 function done(){setTimeout(function()
 	{updates();
-	done();},1000);
+	done();},100);
 	}
 
 function updates(){$scope.saved=localStorage.getItem('reports');
 	$scope.items=(localStorage.getItem('reports')!=null)?JSON.parse($scope.saved):[{title:'',done:false}];
 };
 })
-.controller('TodoController',function($scope,$http,$state, $ionicHistory,){
+.controller('TodoController',function($scope,$http,$state, $ionicHistory){
 	$scope.saved=localStorage.getItem('reports');
 	$scope.reports=(localStorage.getItem('reports')!=null)?JSON.parse($scope.saved):[{title:'',done:false}];
 	localStorage.setItem('reports',JSON.stringify($scope.reports));
@@ -55,8 +55,8 @@ function updates(){$scope.saved=localStorage.getItem('reports');
 
 	$scope.addToLocal=function(){
 	$scope.saved=localStorage.getItem('reports');
-	$scope.reports=(localStorage.getItem('reports')!=null)?JSON.parse($scope.saved):[];
-	localStorage.setItem('reports',JSON.stringify($scope.report));
+	$scope.reports=(localStorage.getItem('reports')!=null)?JSON.parse($scope.saved):JSON.parse($scope.saved);
+	localStorage.setItem('reports',JSON.stringify($scope.reports));
 
 		console.log("its here");
 
@@ -81,11 +81,14 @@ function updates(){$scope.saved=localStorage.getItem('reports');
 	 $scope.reports.splice(item,1);
 	localStorage.setItem('reports', JSON.stringify($scope.reports));
 
+
 	};
 	$scope.add=function(item){
-		 var index = $scope.reports.indexOf(item);
-		$localStorage.reports.splice(localStorage.reports.indexOf(item),1);
-   localStorage.setItem('reports', JSON.stringify($scope.reports));
+$scope.desc=item.description;
+console.log($scope.desc);
+
+//		$scope.reports.splice(item),1);
+//   localStorage.setItem('reports', JSON.stringify($scope.reports));
 	};
 })
 
