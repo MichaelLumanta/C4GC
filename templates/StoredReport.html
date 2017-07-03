@@ -1,6 +1,5 @@
 <ion-view view-title="Stored Report">
-<ion-content class="padding">
-
+	<ion-content class="padding">
 <label class="item item-input">
 		<i class="icon ion-ios-search placeholder-icon"></i>
 		<input type="text" placeholder="Search Report" ng-model="search">
@@ -8,12 +7,16 @@
 <div ng-controller='Search'>
 <div class="list">
 <div class="item item-icon-right" ng-repeat="item in items | filter:search">
+
+
 <label ng-model="studentId">{{item.StudentId}}</label>
+<br>
+<label ng-model="studentId">{{item.category}}</label>
 <br>
 <label ng-model="rep">{{item.description}}</label>
 
 <a class="button button-icon icon ion-android-delete" data-ng-click="remove(item)"ng-controller='TodoController' style="position: absolute; right:60px; width: 50px;"></a>
-<a class="button button-icon icon ion-play" data-ng-click="add(item)"ng-controller='TodoController' ></a>
+<i class="button button-icon icon ion-android-send" data-ng-click="add(item)"ng-controller='TodoController' ></i>
 
 </div>
 

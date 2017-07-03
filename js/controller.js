@@ -25,20 +25,22 @@ function updates(){$scope.saved=localStorage.getItem('reports');
 			method: "POST",
 			data:{
 			'report': $scope.report,
-			'studentId': $scope.studentId
-
+			'studentId': $scope.studentId,
+			'category': $scope.Category
 			}
 		})
 .success(function(response){
-                    console.log(response);
+
 					var som=response;
-					if(som!=null)
+					console.log(response);
+					if(som!=""&& som!=null)
 					{
 						 $scope.addToLocal();
 					}
 					else{
 					$scope.report='';
 					$scope.studentId='';
+					$scope.Category='';
 					}
                 });
 
@@ -62,11 +64,12 @@ function updates(){$scope.saved=localStorage.getItem('reports');
 
 		var report= $scope.report;
 			$scope.reports.push({
+				category:$scope.Category,
 				description:$scope.report,
 				StudentId:$scope.studentId,
 				done:false
 			});
-
+	    $scope.Category='';
 			$scope.report='';
 			$scope.studentId='';
 			localStorage.setItem('reports',JSON.stringify($scope.reports));
@@ -85,7 +88,22 @@ function updates(){$scope.saved=localStorage.getItem('reports');
 	};
 	$scope.add=function(item){
 $scope.desc=item.description;
-console.log($scope.desc);
+$scope.num=item.StudentId;
+$scope.category=item.category;
+$http({
+	url:"http://localhost/c4gc/db/insert.php",
+	method: "POST",
+	data:{
+	'report': $scope.desc,
+	'studentId': $scope.num,
+'category': $scope.category
+	}
+}).success(function(response){
+
+	$scope.reports.splice(item,1);
+ localStorage.setItem('reports', JSON.stringify($scope.reports));
+
+})
 
 //		$scope.reports.splice(item),1);
 //   localStorage.setItem('reports', JSON.stringify($scope.reports));

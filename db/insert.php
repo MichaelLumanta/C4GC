@@ -1,4 +1,4 @@
-<?php 
+<?php
 // Including database connections
 require_once 'database_connections.php';
 
@@ -12,7 +12,7 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
     if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
         if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
-            header("Access-Control-Allow-Methods: GET, POST, OPTIONS");         
+            header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 
         if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
             header("Access-Control-Allow-Headers:{$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
@@ -26,10 +26,11 @@ $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 $report = $request->report;
 $studentId = $request->studentId;
+$category = $request->category;
+$date= date("Y-m-d h:i:sa");
 
 
-
-$query="INSERT INTO report(Report_Id,Image,Description,Student_Id,Date_Reported,Mac_Add) VALUES('','','".$report."','".$studentId."','','')";
+$query="INSERT INTO report(Report_Id,Image,Category,Description,Student_Id,Date_Reported,Mac_Add) VALUES('','','".$category."','".$report."','".$studentId."','.$date.','')";
 mysqli_query($con,$query);
 
 ?>

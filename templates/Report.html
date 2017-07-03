@@ -1,33 +1,53 @@
+<style>
+
+.reporting{
+  box-shadow: 4px 4px 4px grey;
+}
+.sid{
+  box-shadow: 4px 4px 4px grey;
+}
+
+</style>
 <ion-view view-title="Report">
 <ion-content class="padding">
 
 
-<div class="list" align="center">
-    <header>
-        Take a photo with your Android browser.
-    </header>
-    <div id="content"></div> 
-        
-                                     
-    <div class="container" ng-controller='TodoController'> 
+<div class="list" align="center" >
+
+    <div class="container" ng-controller='TodoController'>
 		<form class="todo-form "ng-submit="addReport()">
-		<input type="file" accept="image/*" id="input" name="input"> 
-		<br>
+      <form ng-app="fileUpload" ng-controller="MyCtrl" name="form">
+
+
+  <input ngf-select="" ng-model="picFile" name="file" ngf-accept="'image/*'"  accept="image/*" type="file">
+
+
+		<br><br>
+    Pick category of Your Report <br>
+    <div>
+    <select ng-model="Category" required="" class="ng-pristine ng-invalid ng-invalid-required" style="height:30px; width:200px;">
+  <option value="Broken Things">Broken Things </option>
+  <option value="Student Behavior">Student Behavior </option>
+</select>
+   </div>
+<br>
+    <div class='reporting'>
+
 		 <label class="item item-input">
 <textarea ng-model="report" placeholder="Enter Report Here/ Short Description" rows="6" cols="40">
-	
 		</textarea>
   </label>
-		
+</div>
+  <br>
+  <div class='sid'>
 	 <label class="item item-input">
    <input type="text" ng-model="studentId" placeholder="Student Number / Not a Student">
   </label>
-	
+</div>
 	<br>
+
+
 	<button type="submit" value="Send Report" class="button button-calm button-small button-block" style="border-radius:80px;"> Submit</button>
 	</form>
 </ion-view>
 </ion-content>
-
-	
-
