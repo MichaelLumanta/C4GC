@@ -1,6 +1,7 @@
-angular.module('starter.controllers',[])
+angular.module('starter.controllers',['ngAnimate'])
 .controller('Search',function($scope,$http)
-{
+{$scope.saved=localStorage.getItem('reports');
+	$scope.items=(localStorage.getItem('reports')!=null)?JSON.parse($scope.saved):[{title:'',done:false}];
 done();
 
 function done(){setTimeout(function()
@@ -11,6 +12,25 @@ function done(){setTimeout(function()
 function updates(){$scope.saved=localStorage.getItem('reports');
 	$scope.items=(localStorage.getItem('reports')!=null)?JSON.parse($scope.saved):[{title:'',done:false}];
 };
+})
+.controller('Search1',function($scope,$http)
+{  var url="db/select.php";
+$http.get(url).success(function(response){
+	$scope.items=response;
+});
+done();
+
+function done(){setTimeout(function()
+	{update1();
+	done();},100);
+	}
+
+function update1(){ var url="db/select.php";
+$http.get(url).success(function(response){
+	$scope.items=response;
+});
+}
+
 })
 .controller('TodoController',function($scope,$http,$state, $ionicHistory){
 	$scope.saved=localStorage.getItem('reports');
@@ -26,7 +46,8 @@ function updates(){$scope.saved=localStorage.getItem('reports');
 			data:{
 			'report': $scope.report,
 			'studentId': $scope.studentId,
-			'category': $scope.Category
+			'category': $scope.Category,
+			'location': $scope.location
 			}
 		})
 .success(function(response){
@@ -41,6 +62,7 @@ function updates(){$scope.saved=localStorage.getItem('reports');
 					$scope.report='';
 					$scope.studentId='';
 					$scope.Category='';
+					$scope.location='';
 					}
                 });
 
@@ -66,12 +88,14 @@ function updates(){$scope.saved=localStorage.getItem('reports');
 			$scope.reports.push({
 				category:$scope.Category,
 				description:$scope.report,
+				location:$scope.location,
 				StudentId:$scope.studentId,
 				done:false
 			});
 	    $scope.Category='';
 			$scope.report='';
 			$scope.studentId='';
+			$scope.location='';
 			localStorage.setItem('reports',JSON.stringify($scope.reports));
 
 
@@ -90,13 +114,15 @@ function updates(){$scope.saved=localStorage.getItem('reports');
 $scope.desc=item.description;
 $scope.num=item.StudentId;
 $scope.category=item.category;
+$scope.location=item.location;
 $http({
 	url:"http://localhost/c4gc/db/insert.php",
 	method: "POST",
 	data:{
 	'report': $scope.desc,
 	'studentId': $scope.num,
-'category': $scope.category
+'category': $scope.category,
+'location': $scope.location
 	}
 }).success(function(response){
 
@@ -109,5 +135,72 @@ $http({
 //   localStorage.setItem('reports', JSON.stringify($scope.reports));
 	};
 })
+.controller('SliderController', function($scope) {
+  $scope.images = [{
+    src: 'img/1.png',
+    title: 'Pic 1'
+  }, {
+    src: 'img/2.jpg',
+    title: 'Pic 2'
+  }, {
+    src: 'img/3.jpg',
+    title: 'Pic 3'
+  }, {
+    src: 'img/4.png',
+    title: 'Pic 4'
+  }, {
+    src: 'img/5.png',
+    title: 'Pic 5'
+  }];
+})
 
+.directive('slider', function ($timeout) {
+  return {
+    restrict: 'AE',
+	replace: true,
+	scope:{
+		images: '='
+	},
+    link: function (scope, elem, attrs) {
+
+		scope.currentIndex=0;
+
+		scope.next=function(){
+			scope.currentIndex<scope.images.length-1?scope.currentIndex++:scope.currentIndex=0;
+		};
+
+		scope.prev=function(){
+			scope.currentIndex>0?scope.currentIndex--:scope.currentIndex=scope.images.length-1;
+		};
+
+		scope.$watch('currentIndex',function(){
+			scope.images.forEach(function(image){
+				image.visible=false;
+			});
+			scope.images[scope.currentIndex].visible=true;
+		});
+
+		/* Start: For Automatic slideshow*/
+
+		var timer;
+
+		var sliderFunc=function(){
+			timer=$timeout(function(){
+				scope.next();
+				timer=$timeout(sliderFunc,5000);
+			},5000);
+		};
+
+		sliderFunc();
+
+		scope.$on('$destroy',function(){
+			$timeout.cancel(timer);
+		});
+
+		/* End : For Automatic slideshow*/
+
+    },
+	templateUrl:''
+  }
+});
 ;

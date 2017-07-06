@@ -1,0 +1,22 @@
+
+<ion-view view-title="What is C4GC">
+	<ion-content class="padding">
+    <div ng-controller="SliderController">
+
+       <slider images="images"/>
+    </div>
+    <div class="slider">
+    	<div class="slide" ng-repeat="image in images" ng-show="image.visible">
+    		<img ng-src="img/{{image.src}}"/>
+    	</div>
+    	<div class="arrows">
+    		<a href="#" ng-click="prev()"><img src="img/left-arrow.png"/></a> <a href="#" ng-click="next()"><img src="img/right-arrow.png"/></a>
+    	</div>
+    </div>
+
+
+
+
+<a href="#/app/Report">    <button class="button button-calm button-small " style="border-radius:80px; width: 100px; margin:auto; display:block; ">Skip</button></a>
+</ion-view>
+</ion-content>

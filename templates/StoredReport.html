@@ -5,15 +5,16 @@
 		<input type="text" placeholder="Search Report" ng-model="search">
 </label>
 <div ng-controller='Search'>
-<div class="list">
+<div class="list" style="box-shadow: 4px 4px 4px grey;">
 <div class="item item-icon-right" ng-repeat="item in items | filter:search">
-
 
 <label ng-model="studentId">{{item.StudentId}}</label>
 <br>
-<label ng-model="studentId">{{item.category}}</label>
+<label ng-model="category">{{item.category}}</label>
 <br>
-<label ng-model="rep">{{item.description}}</label>
+<label ng-model="rep" style="">{{item.description}}</label>
+<br>
+<label ng-model="studentId">{{item.location}}</label>
 
 <a class="button button-icon icon ion-android-delete" data-ng-click="remove(item)"ng-controller='TodoController' style="position: absolute; right:60px; width: 50px;"></a>
 <i class="button button-icon icon ion-android-send" data-ng-click="add(item)"ng-controller='TodoController' ></i>

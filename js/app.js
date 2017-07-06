@@ -11,5 +11,8 @@ templateUrl:'templates/Menu.html'})
 
 .state('app.Local',{url:'/Local',views:{'menuContent':{templateUrl:'templates/StoredReport.html',controller:'Search'}}})
 
+.state('app.Online',{url:'/Online',views:{'menuContent':{templateUrl:'templates/OnlineReport.html',controller:'Search'}}})
 
-$urlRouterProvider.otherwise('/app/Report'); });
+.state('app.What',{url:'/What',views:{'menuContent':{templateUrl:'templates/C4GC.html',controller:'Search'}}})
+
+$urlRouterProvider.otherwise('/app/What'); });

@@ -27,10 +27,11 @@ $request = json_decode($postdata);
 $report = $request->report;
 $studentId = $request->studentId;
 $category = $request->category;
+$location=$request->location;
 $date= date("Y-m-d h:i:sa");
 
 
-$query="INSERT INTO report(Report_Id,Image,Category,Description,Student_Id,Date_Reported,Mac_Add) VALUES('','','".$category."','".$report."','".$studentId."','.$date.','')";
+$query="INSERT INTO report(Report_Id,Image,Category,Description,location,Student_Id,Date_Reported,Mac_Add,Count) VALUES('','','".$category."','".$report."','".$location."','".$studentId."','".$date."','','1')";
 mysqli_query($con,$query);
 
 ?>
