@@ -10,7 +10,8 @@
 <ion-view view-title="Report">
 <ion-content class="padding">
 
-
+<div ng-controller="session" ng-model="rep" value="rep">
+</div>
 <div class="list" align="center" >
 
     <div class="container" ng-controller='TodoController'>
@@ -56,5 +57,6 @@
 
 	<button type="submit" value="Send Report" class="button button-balanced button-small button-block" style="border-radius:80px;"> Submit</button>
 	</form>
+
 </ion-view>
 </ion-content>

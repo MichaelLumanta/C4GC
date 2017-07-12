@@ -1,29 +1,45 @@
 <ion-view view-title="Profile">
 	<ion-content class="padding">
+
+<img id="userimg"  src="" height="120px" width="120px">
+Michael Henry Lumanta<br>
 <label class="item item-input">
 		<i class="icon ion-ios-search placeholder-icon"></i>
-		<select ng-model="Category" required="" class="ng-pristine ng-invalid ng-invalid-required" style="height:30px; width:200px;">
-	<option value=""></option>
-<option value="Broken Things">Broken Things </option>
-	<option value="Student Behavior">Student Behavior </option>
-</select>
+		<input type="text" placeholder="Search Report" ng-model="search">
 </label>
-<div ng-controller='Search1'>
+<div ng-controller='Search'>
 <div class="list" style="box-shadow: 4px 4px 4px grey;">
-<div class="item item-icon-right" ng-repeat="item in items | filter:Category">
-
-<label ng-model="studentId"><h4>Category:</h4> {{item.Category}}</label>
-<br>
-<label ng-model="studentId"><h4>Report:</h4> {{item.Description}}</label>
-<br>
-<label ng-model="rep"><h4>Location:</h4> {{item.Student_Id}}</label>
-<br>
-<label ng-model="rep"><h4>User:</h4> {{item.Date}}</label>
-
+<div class="item item-icon-right" ng-repeat="item in items | filter:search">
+	<table>
+		<tr>
+			<td>
+<label ng-model="studentId">{{item.StudentId}}</label>
+</td>
+</tr>
+<tr>
+	<td>
+<label ng-model="category">{{item.category}}</label>
+</td>
+</tr>
+<tr>
+	<td>
+<label ng-model="rep" style="">{{item.description}}</label>
+</td>
+</tr>
+<tr>
+	<td>
+<label ng-model="studentId">{{item.location}}</label>
+</td>
+</tr>
+<tr>
+	<td>
+</td>
+</tr>
+</table>
+<br><br>
 </div>
 
 </div>
 </div>
-
 </ion-view>
 </ion-content>

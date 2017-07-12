@@ -61,7 +61,6 @@ $http.get(url).success(function(response){
 					}
 					else{
 					$scope.report='';
-
 					$scope.Category='';
 					$scope.location='';
 					}
@@ -97,7 +96,7 @@ $http.get(url).success(function(response){
 			});
 	    $scope.Category='';
 			$scope.report='';
-			;
+
 			$scope.location='';
 			localStorage.setItem('reports',JSON.stringify($scope.reports));
 
@@ -152,11 +151,12 @@ $http({
 		$http.get(url).success(function(response){
 			$scope.accounts=response;
 
- 			if($scope.accounts.match("Error: Data not Found.."))
+ 			if($scope.accounts=="Error: Data not Found..")
 			{var url="db/select.php?guest&username='"+$scope.username+"'&password='"+$scope.password+"'";
 		$http.get(url).success(function(response){
 			$scope.accounts=response;
-			if($scope.accounts.length>=0)
+
+			if($scope.accounts.length>0)
 			{
 				$scope.saved=localStorage.getItem('accounts');
 				$scope.reports=(localStorage.getItem('accounts')!=null)?[{account:$scope.username,done:false}]:[{account:$scope.username,done:false}];
@@ -170,7 +170,9 @@ $state.go('What');
 
 					if($scope.username == $scope.accounts[0].StudentID && $scope.password == $scope.accounts[0].Password)
 					{
-
+						$scope.saved=localStorage.getItem('accounts');
+						$scope.reports=(localStorage.getItem('accounts')!=null)?[{account:$scope.username,done:false}]:[{account:$scope.username,done:false}];
+						localStorage.setItem('accounts',JSON.stringify($scope.reports));
 		$state.go('What');
 					}
 		}
@@ -253,10 +255,25 @@ else{
 
 }
 })
-.controller('SignOut',function($scope,$http)
+.controller('SignOut',function($scope,$http,$state)
 {
-	$scope.Sign = function(){
-		alert("here");
+	$scope.out = function(){
+	localStorage.setItem('accounts',JSON.stringify([]));
+	$state.go('LogIn');
 	}
 })
+.controller('session',function($scope,$http,$state)
+{$scope.saved=localStorage.getItem('accounts');
+try{
+
+if(JSON.parse($scope.saved)[0].account!=null){
+	$scope.items=(localStorage.getItem('accounts')!="[]")?$state.go('app.search'):$state.go('LogIn');
+}
+}
+catch(e)
+{
+	$state.go('LogIn');
+}
+})
+
 ;
