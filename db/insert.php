@@ -21,7 +21,8 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
     }
 
 
-
+    if(isset($_GET['report']))
+    {
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 $report = $request->report;
@@ -32,6 +33,29 @@ $date= date("Y-m-d h:i:sa");
 
 
 $query="INSERT INTO report(Report_Id,Image,Category,Description,location,Student_Id,Date_Reported,Mac_Add,Count) VALUES('','','".$category."','".$report."','".$location."','".$studentId."','".$date."','','1')";
-mysqli_query($con,$query);
+$result=mysqli_query($con,$query);
+
+if(!$result){
+echo json_encode("fail");}
+else{
+  echo json_encode("Worked");
+}
+}
+if(isset($_GET['register']))
+{
+  $postdata = file_get_contents("php://input");
+  $request = json_decode($postdata);
+  $Name=$request->Name;
+  $User=$request->User;
+  $Pass=$request->Pass;
+  $query="INSERT INTO guests(ID,img,Username,Password,FullName) VALUES('','','".$User."','".$Pass."','".$Name."')";
+$result=  mysqli_query($con,$query);
+if(!$result){
+echo json_encode("fail");}
+else{
+  echo json_encode("Worked");
+}
+  }
+
 
 ?>

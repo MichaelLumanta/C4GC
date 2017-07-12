@@ -1,0 +1,38 @@
+<ion-view>
+  <ion-content>
+      <div  ng-controller='SignIn'>
+<form class="todo-form "ng-submit="Register()">
+<div class="card">
+  <div class="item item-divider">
+  Fill in the form
+  </div>
+  <div class="item item-text-wrap">
+    <div class="list">
+
+  <label class="item item-input">
+    <input type="text" placeholder="Full Name" ng-model="Name">
+  </label>
+
+  <label class="item item-input">
+    <input type="text" placeholder="Username" ng-model="User">
+  </label>
+
+  <label class="item item-input">
+    <input type="password" placeholder="Password" ng-model="Pass">
+  </label>
+  <label class="item item-input">
+    <input type="password" placeholder="Confirm Password" ng-model="Password">
+  </label>
+</div>
+  </div>
+  <div class="item item-divider">
+    <button type="submit" value="Send Report" class="button button-balanced button-small button-block" style="border-radius:80px;">
+      Register
+    </button>
+
+  </div>
+</div>
+</form>
+</div>
+</ion-content>
+</ion-view>

@@ -1,0 +1,26 @@
+
+<br><br>
+<img src="img/logo.jpg" style="height:180px; width:180px; margin:auto; display:block; border: 3px solid white; ">
+<div ng-controller="SignIn">
+  <form class="todo-form "ng-submit="submit()">
+<div class="card">
+<div class="item item-divider">
+  Login to your Account
+</div>
+<div class="item item-text-wrap">
+  <div class="list">
+<label class="item item-input">
+  <input type="text" placeholder="Username / Student_Id" ng-model="username">
+</label>
+<label class="item item-input">
+  <input type="password" placeholder="Password" ng-model="password">
+</label>
+</div>
+</div>
+</div>
+
+<button type="submit" class="button centerbutton button-balanced button-block" style="border-radius:80px; width: 100px; height: 40px; margin:auto; display:block;">
+  LogIn
+</button>
+</form><br>
+<a class="button centerbutton  button-block" style="border-radius:80px; width: 100px; height: 40px; margin:auto; display:block;" href="#/register">Register</a>

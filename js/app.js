@@ -11,8 +11,18 @@ templateUrl:'templates/Menu.html'})
 
 .state('app.Local',{url:'/Local',views:{'menuContent':{templateUrl:'templates/StoredReport.html',controller:'Search'}}})
 
-.state('app.Online',{url:'/Online',views:{'menuContent':{templateUrl:'templates/OnlineReport.html',controller:'Search'}}})
+.state('app.Profile',{url:'/Profile',views:{'menuContent':{templateUrl:'templates/Profile.html',controller:'Search'}}})
 
-.state('app.What',{url:'/What',views:{'menuContent':{templateUrl:'templates/C4GC.html',controller:'Search'}}})
+.state('What', {
+    url: '/What',
 
-$urlRouterProvider.otherwise('/app/What'); });
+    templateUrl: 'templates/C4GC.html'})
+.state('LogIn', {
+		    url: '/LogIn',
+
+		    templateUrl: 'templates/LogIn.html'})
+.state('register', {
+						    url: '/register',
+
+						    templateUrl: 'templates/register.html'})
+$urlRouterProvider.otherwise('/LogIn'); });

@@ -34,33 +34,34 @@ $http.get(url).success(function(response){
 })
 .controller('TodoController',function($scope,$http,$state, $ionicHistory){
 	$scope.saved=localStorage.getItem('reports');
-	$scope.reports=(localStorage.getItem('reports')!=null)?JSON.parse($scope.saved):[{title:'',done:false}];
+	$scope.reports=(localStorage.getItem('reports')!=null)?JSON.parse($scope.saved):[];
 	localStorage.setItem('reports',JSON.stringify($scope.reports));
 		$scope.addReport1=function(){
+
+			$scope.saved=localStorage.getItem('accounts');
+				$scope.account=(localStorage.getItem('accounts')!=null)?JSON.parse($scope.saved):[{accounts:'',done:false}];
 
 		 $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
 
 		$http({
-			url:"http://localhost/c4gc/db/insert.php",
+			url:"http://localhost/c4gc/db/insert.php?report",
 			method: "POST",
 			data:{
 			'report': $scope.report,
-			'studentId': $scope.studentId,
+			'studentId': $scope.account[0].account,
 			'category': $scope.Category,
 			'location': $scope.location
 			}
 		})
 .success(function(response){
 
-					var som=response;
-					console.log(response);
-					if(som!=""&& som!=null)
+					if(response.match("fail"))
 					{
 						 $scope.addToLocal();
 					}
 					else{
 					$scope.report='';
-					$scope.studentId='';
+
 					$scope.Category='';
 					$scope.location='';
 					}
@@ -81,20 +82,22 @@ $http.get(url).success(function(response){
 	$scope.saved=localStorage.getItem('reports');
 	$scope.reports=(localStorage.getItem('reports')!=null)?JSON.parse($scope.saved):JSON.parse($scope.saved);
 	localStorage.setItem('reports',JSON.stringify($scope.reports));
+	$scope.saved=localStorage.getItem('accounts');
+		$scope.account=(localStorage.getItem('accounts')!=null)?JSON.parse($scope.saved):[{accounts:'',done:false}];
 
-		console.log("its here");
+
 
 		var report= $scope.report;
 			$scope.reports.push({
 				category:$scope.Category,
 				description:$scope.report,
 				location:$scope.location,
-				StudentId:$scope.studentId,
+				StudentId:$scope.account[0].account,
 				done:false
 			});
 	    $scope.Category='';
 			$scope.report='';
-			$scope.studentId='';
+			;
 			$scope.location='';
 			localStorage.setItem('reports',JSON.stringify($scope.reports));
 
@@ -112,95 +115,148 @@ $http.get(url).success(function(response){
 	};
 	$scope.add=function(item){
 $scope.desc=item.description;
-$scope.num=item.StudentId;
+
 $scope.category=item.category;
 $scope.location=item.location;
+$scope.saved=localStorage.getItem('accounts');
+	$scope.account=(localStorage.getItem('accounts')!=null)?JSON.parse($scope.saved):[{accounts:'',done:false}];
+
 $http({
-	url:"http://localhost/c4gc/db/insert.php",
+	url:"http://localhost/c4gc/db/insert.php?report",
 	method: "POST",
 	data:{
 	'report': $scope.desc,
-	'studentId': $scope.num,
+	'studentId': $scope.account[0].account,
 'category': $scope.category,
 'location': $scope.location
 	}
 }).success(function(response){
+	if(response.match("Worked"))
+	{
+		$scope.reports.splice(item,1);
+	 localStorage.setItem('reports', JSON.stringify($scope.reports));
+	}
 
-	$scope.reports.splice(item,1);
- localStorage.setItem('reports', JSON.stringify($scope.reports));
 
 })
 
 //		$scope.reports.splice(item),1);
 //   localStorage.setItem('reports', JSON.stringify($scope.reports));
 	};
-})
-.controller('SliderController', function($scope) {
-  $scope.images = [{
-    src: 'img/1.png',
-    title: 'Pic 1'
-  }, {
-    src: 'img/2.jpg',
-    title: 'Pic 2'
-  }, {
-    src: 'img/3.jpg',
-    title: 'Pic 3'
-  }, {
-    src: 'img/4.png',
-    title: 'Pic 4'
-  }, {
-    src: 'img/5.png',
-    title: 'Pic 5'
-  }];
-})
+}).controller('SignIn',function($scope,$http,$state)
+{
 
-.directive('slider', function ($timeout) {
-  return {
-    restrict: 'AE',
-	replace: true,
-	scope:{
-		images: '='
-	},
-    link: function (scope, elem, attrs) {
+ $scope.submit= function(){
 
-		scope.currentIndex=0;
+		var url="db/select.php?studentaccounts&username="+$scope.username+"&password="+$scope.password+"";
+		$http.get(url).success(function(response){
+			$scope.accounts=response;
 
-		scope.next=function(){
-			scope.currentIndex<scope.images.length-1?scope.currentIndex++:scope.currentIndex=0;
-		};
+ 			if($scope.accounts.match("Error: Data not Found.."))
+			{var url="db/select.php?guest&username='"+$scope.username+"'&password='"+$scope.password+"'";
+		$http.get(url).success(function(response){
+			$scope.accounts=response;
+			if($scope.accounts.length>=0)
+			{
+				$scope.saved=localStorage.getItem('accounts');
+				$scope.reports=(localStorage.getItem('accounts')!=null)?[{account:$scope.username,done:false}]:[{account:$scope.username,done:false}];
+				localStorage.setItem('accounts',JSON.stringify($scope.reports));
+$state.go('What');
 
-		scope.prev=function(){
-			scope.currentIndex>0?scope.currentIndex--:scope.currentIndex=scope.images.length-1;
-		};
-
-		scope.$watch('currentIndex',function(){
-			scope.images.forEach(function(image){
-				image.visible=false;
+			}
 			});
-			scope.images[scope.currentIndex].visible=true;
-		});
+			}
+			else{
 
-		/* Start: For Automatic slideshow*/
+					if($scope.username == $scope.accounts[0].StudentID && $scope.password == $scope.accounts[0].Password)
+					{
 
-		var timer;
+		$state.go('What');
+					}
+		}
 
-		var sliderFunc=function(){
-			timer=$timeout(function(){
-				scope.next();
-				timer=$timeout(sliderFunc,5000);
-			},5000);
-		};
 
-		sliderFunc();
 
-		scope.$on('$destroy',function(){
-			$timeout.cancel(timer);
-		});
+	});
 
-		/* End : For Automatic slideshow*/
+}
 
-    },
-	templateUrl:''
-  }
-});
+$scope.Register=function(){
+
+	$scope.username=$scope.User;
+	$scope.password=$scope.password;
+	var url="db/select.php?guests&username='"+$scope.username+"'";
+	$http.get(url).success(function(response){
+	$scope.accounts=response;
+
+	if ($scope.User==$scope.accounts[0].Username) {
+	alert("Username already taken");
+
+
+	}
+	});
+
+
+	var url="db/select.php?guestsname&username='"+$scope.Name+"'";
+	$http.get(url).success(function(response){
+	$scope.account=response;
+
+	 if ($scope.Name==$scope.account[0].FullName) {
+	alert("Full Name already taken");
+
+}
+	});
+if($scope.Name==null ||$scope.User==null||$scope.Pass==null){
+alert("One of the field is blank");
+
+}
+else if ($scope.User.length<=5) {
+	alert("Your Username is too short");
+
+}
+else if ($scope.Pass.length<=5) {
+	alert("Your Password is too short");
+
+}
+else if ($scope.Pass!=$scope.Password) {
+	alert("Incorrect Confirmation");
+
+}
+
+
+else {
+
+	$http({
+		url:"http://localhost/c4gc/db/insert.php?register",
+		method: "POST",
+		data:{
+		'Name': $scope.Name,
+		'User': $scope.User,
+		'Pass': $scope.Pass
+
+		}
+	})
+.success(function(response){
+
+
+				if(response.match("Worked")){
+$state.go('LogIn')
+alert("You are Registerd \nLog In below");
+}
+else{
+
+}
+
+							});
+}
+
+
+}
+})
+.controller('SignOut',function($scope,$http)
+{
+	$scope.Sign = function(){
+		alert("here");
+	}
+})
 ;

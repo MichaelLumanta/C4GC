@@ -1,5 +1,4 @@
-<style>
-
+``<style>
 .reporting{
   box-shadow: 4px 4px 4px grey;
 }
@@ -19,13 +18,17 @@
       <form ng-app="fileUpload" ng-controller="MyCtrl" name="form">
 
 
-  <input ngf-select="" ng-model="picFile" name="file" ngf-accept="'image/*'"  accept="image/*" type="file">
+<img id="userimg"  src="" height="120px" width="120px" style="display:block;">
+<input id="fileholder" type="file" value="Upload" accept="image/x-png,image/jpeg;capture=camera" onchange="loadFile(event)">
 
 
 		<br><br>
     Pick category of Your Report <br>
+<div>
+
+
     <div>
-    <select ng-model="Category" required="" class="ng-pristine ng-invalid ng-invalid-required" style="height:30px; width:200px;">
+    <select ng-model="Category" required="" class="item item-input item-select" style="height:30px; width:200px;">
   <option value="Broken Things">Broken Things </option>
   <option value="Student Behavior">Student Behavior </option>
 </select>
@@ -40,20 +43,18 @@
 </div>
   <div class='sid'>
   	 <label class="item item-input">
-     <input type="text" ng-model="location" placeholder="Where can it be found? Any landmark?">
+     <input type="text" ng-model="location" placeholder="Location">
     </label>
   </div>
   <br>
   <div class='sid'>
-	 <label class="item item-input">
-   <input type="text" ng-model="studentId" placeholder="Student Number / Full Name">
-  </label>
+
 </div>
 
 
 	<br>
 
-	<button type="submit" value="Send Report" class="button button-calm button-small button-block" style="border-radius:80px;"> Submit</button>
+	<button type="submit" value="Send Report" class="button button-balanced button-small button-block" style="border-radius:80px;"> Submit</button>
 	</form>
 </ion-view>
 </ion-content>

@@ -7,17 +7,35 @@
 <div ng-controller='Search'>
 <div class="list" style="box-shadow: 4px 4px 4px grey;">
 <div class="item item-icon-right" ng-repeat="item in items | filter:search">
-
+	<table>
+		<tr>
+			<td>
 <label ng-model="studentId">{{item.StudentId}}</label>
-<br>
+</td>
+</tr>
+<tr>
+	<td>
 <label ng-model="category">{{item.category}}</label>
-<br>
+</td>
+</tr>
+<tr>
+	<td>
 <label ng-model="rep" style="">{{item.description}}</label>
-<br>
+</td>
+</tr>
+<tr>
+	<td>
 <label ng-model="studentId">{{item.location}}</label>
-
-<a class="button button-icon icon ion-android-delete" data-ng-click="remove(item)"ng-controller='TodoController' style="position: absolute; right:60px; width: 50px;"></a>
-<i class="button button-icon icon ion-android-send" data-ng-click="add(item)"ng-controller='TodoController' ></i>
+</td>
+</tr>
+<tr>
+	<td>
+</td>
+</tr>
+</table>
+<br><br>
+<a class="button button-icon icon ion-android-delete" data-ng-click="remove(item)"ng-controller='TodoController' style="position: absolute; top: 40px; right:330px; width: 50px;"></a>
+<i class="button button-icon icon ion-android-send" data-ng-click="add(item)"ng-controller='TodoController' style="position: absolute; top: 40px; right:290px; width: 50px;"></i>
 
 </div>
 
