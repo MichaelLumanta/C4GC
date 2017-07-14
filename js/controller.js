@@ -347,7 +347,8 @@ catch(e)
 			function onCopySuccess(entry) {
 				$scope.$apply(function () {
 					$scope.images.push(entry.nativeURL);
-					console.log($scope.images);
+					var output=document.getElementById('userimg');
+			    output.src=$scope.images;
 				});
 			}
 
