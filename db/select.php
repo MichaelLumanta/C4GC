@@ -5,8 +5,9 @@ $table= null;
 
 if(isset($_GET['report']))
 {
+	$account=$_GET['account'];
 	$table= "report";
-	$sql="Select * FROM $table ";
+	$sql="Select * FROM $table where Student_Id=".$account." ";
 	$result = mysqli_query($con,$sql);
 
 		if(!$result){

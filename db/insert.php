@@ -32,7 +32,7 @@ $location=$request->location;
 $date= date("Y-m-d h:i:sa");
 
 
-$query="INSERT INTO report(Report_Id,Image,Category,Description,location,Student_Id,Date_Reported,Mac_Add,Count) VALUES('','','".$category."','".$report."','".$location."','".$studentId."','".$date."','','1')";
+$query="INSERT INTO report(Report_Id,Image,Category,Description,location,Student_Id,Date_Reported,Status,Count) VALUES('','','".$category."','".$report."','".$location."','".$studentId."','".$date."','Sent','1')";
 $result=mysqli_query($con,$query);
 
 if(!$result){

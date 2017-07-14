@@ -17,6 +17,10 @@ templateUrl:'templates/Menu.html'})
     url: '/What',
 
     templateUrl: 'templates/C4GC.html'})
+		.state('Landing', {
+		    url: '/Landing',
+
+		    templateUrl: 'templates/Landing.html'})
 .state('LogIn', {
 		    url: '/LogIn',
 

@@ -15,11 +15,11 @@
 <br><br><br><br><br>
 <img src="img/logo.jpg" style="height:180px; width:180px; margin:auto; display:block; border: 3px solid white; ">
 
-<ion-slide-box on-slide-changed="slideHasChanged($index)">
-  <ion-slide>
+<ion-slide-box on-slide-changed="slideHasChanged($index)" >
+  <ion-slide >
 
-    <div class="list-card"><h4 style="text-align:center;"> What is C4GC?</h4>
-<p style="width: 300px; text-align:center; margin:auto;">
+    <div class="list-card" ng-click="introduction()"><h2 style="text-align:center;"> What is C4GC?</h2>
+<p style="width: 300px; text-align:center; margin:auto; font-size:25px!important">
 	-C4GC is a mobile application that allow users
 	to report something that is undesirable things,
 	conduct or Gordon College's property within the
@@ -27,9 +27,9 @@
 		</div>
   </ion-slide>
 
-	<ion-slide>
-    <div class="list-card"><h4 style="text-align:center;"> Why C4GC?</h4>
-<p style="width: 300px; text-align:center; margin:auto;">	-it stands for Care For Gordon College. Everyone
+	<ion-slide >
+    <div class="list-card"><h2 style="text-align:center;"> Why C4GC?</h2>
+<p style="width: 300px; text-align:center; margin:auto;font-size:25px!important">	-it stands for Care For Gordon College. Everyone
 	who go to Gordon College to work, to study etc.
 	should care for the institution. How? by reporting
 	flaws of the School and making it a better place.</p>
@@ -38,18 +38,18 @@
 
 	<ion-slide>
 
-    <div class="list-card"><h4 style="text-align:center;"> What does this app contribute?</h4>
-<p style="width: 300px; text-align:center; margin:auto;">
+    <div class="list-card"><h2 style="text-align:center;"> What does this app contribute?</h2>
+<p style="width: 300px; text-align:center; margin:auto; font-size:25px!important;">
 	-C4GC allows users,student,guest,or employee
 	to report to the admin for quicker notice,
 	quicker repairement and quicker action.</p>
 		</div>
   </ion-slide>
 
-	<ion-slide>
+	<ion-slide >
 
-		<div class="list-card" ><h4 style="text-align:center;"> What can you report?</h4>
-<p style="width: 300px; text-align:center; margin:auto;">
+		<div class="list-card" ><h2 style="text-align:center;"> What can you report?</h2>
+<p style="width: 300px; text-align:center; margin:auto;font-size:25px!important">
 	- Broken things<br>
 	- Students behavior <br>
 	- Suggestions</p>
@@ -58,12 +58,12 @@
 
   <ion-slide>
 <div>
-  <a  ng-model="start"class="button button-balanced button-block" style="border-radius:80px; width: 100px; height: 40px; margin:auto; display:block; ">Let's start</a>
+  <br><br><br>
+  <a  ng-model="start"class="button button-balanced button-block" style="border-radius:80px; width: 100px; height: 40px; margin:auto; display:block; " href="#/app/Report">Let's start</a>
 </div>
 
 	</ion-slide>
 </ion-slide-box>
 <br>
-  <a ng-hide="start" class="button button-balanced button-block" style="border-radius:80px; width: 100px; height: 40px; margin:auto; display:block; "href="#/app/Report">Skip</a>
 
 </ion-view>

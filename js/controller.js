@@ -1,4 +1,4 @@
-angular.module('starter.controllers',['ngAnimate'])
+angular.module('starter.controllers',['ionic','ngCordova'])
 .controller('Search',function($scope,$http)
 {$scope.saved=localStorage.getItem('reports');
 	$scope.items=(localStorage.getItem('reports')!=null)?JSON.parse($scope.saved):[{title:'',done:false}];
@@ -14,22 +14,15 @@ function updates(){$scope.saved=localStorage.getItem('reports');
 };
 })
 .controller('Search1',function($scope,$http)
-{  var url="db/select.php";
+{ $scope.items=(localStorage.getItem('accounts'));
+$scope.item=JSON.parse($scope.items)[0].account;
+
+	 var url="db/select.php?report&account='"+$scope.item+"'";
 $http.get(url).success(function(response){
 	$scope.items=response;
-});
-done();
 
-function done(){setTimeout(function()
-	{update1();
-	done();},100);
-	}
-
-function update1(){ var url="db/select.php";
-$http.get(url).success(function(response){
-	$scope.items=response;
 });
-}
+
 
 })
 .controller('TodoController',function($scope,$http,$state, $ionicHistory){
@@ -161,7 +154,7 @@ $http({
 				$scope.saved=localStorage.getItem('accounts');
 				$scope.reports=(localStorage.getItem('accounts')!=null)?[{account:$scope.username,done:false}]:[{account:$scope.username,done:false}];
 				localStorage.setItem('accounts',JSON.stringify($scope.reports));
-$state.go('What');
+$state.go('Landing');
 
 			}
 			});
@@ -173,7 +166,7 @@ $state.go('What');
 						$scope.saved=localStorage.getItem('accounts');
 						$scope.reports=(localStorage.getItem('accounts')!=null)?[{account:$scope.username,done:false}]:[{account:$scope.username,done:false}];
 						localStorage.setItem('accounts',JSON.stringify($scope.reports));
-		$state.go('What');
+		$state.go('Landing');
 					}
 		}
 
@@ -268,12 +261,118 @@ try{
 
 if(JSON.parse($scope.saved)[0].account!=null){
 	$scope.items=(localStorage.getItem('accounts')!="[]")?$state.go('app.search'):$state.go('LogIn');
+
 }
 }
 catch(e)
 {
 	$state.go('LogIn');
 }
-})
 
+
+})
+.controller('session1',function($scope,$http,$state)
+{$scope.saved=localStorage.getItem('accounts');
+try{
+
+if(JSON.parse($scope.saved)[0].account!=null){
+	$scope.items=(localStorage.getItem('accounts')!="[]")?$state.go('app.Profile'):$state.go('LogIn');
+$scope.item=(JSON.parse($scope.saved)[0].account);
+}
+}
+catch(e)
+{
+	$state.go('LogIn');
+}
+
+
+})
+.controller('slide',function($scope,$http)
+{
+
+ $scope.one=false;
+ $scope.two=true;
+ $scope.three=true;
+ $scope.introduction=function()
+ {
+	 $scope.one=true;
+	 $scope.two=false;
+	 $scope.three=false;
+ };
+})
+.controller('PictureCtrl', function($scope, $cordovaCamera,$cordovaFile) {
+	$scope.images = [];
+
+	$scope.addImage = function() {
+		// 2
+		var options = {
+			destinationType : Camera.DestinationType.FILE_URI,
+			sourceType : Camera.PictureSourceType.CAMERA, // Camera.PictureSourceType.PHOTOLIBRARY
+			allowEdit : false,
+			encodingType: Camera.EncodingType.JPEG,
+			popoverOptions: CameraPopoverOptions,
+		};
+
+		// 3
+		$cordovaCamera.getPicture(options).then(function(imageData) {
+
+			// 4
+			onImageSuccess(imageData);
+
+			function onImageSuccess(fileURI) {
+				createFileEntry(fileURI);
+			}
+
+			function createFileEntry(fileURI) {
+				window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
+			}
+
+			// 5
+			function copyFile(fileEntry) {
+				var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
+				var newName = makeid() + name;
+
+				window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(fileSystem2) {
+					fileEntry.copyTo(
+						fileSystem2,
+						newName,
+						onCopySuccess,
+						fail
+					);
+				},
+				fail);
+			}
+
+			// 6
+			function onCopySuccess(entry) {
+				$scope.$apply(function () {
+					$scope.images.push(entry.nativeURL);
+					console.log($scope.images);
+				});
+			}
+
+			function fail(error) {
+				console.log("fail: " + error.code);
+			}
+
+			function makeid() {
+				var text = "";
+				var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+				for (var i=0; i < 5; i++) {
+					text += possible.charAt(Math.floor(Math.random() * possible.length));
+				}
+				return text;
+			}
+
+		}, function(err) {
+			console.log(err);
+		});
+	}
+	$scope.urlForImage = function(imageName) {
+	  var name = imageName.substr(imageName.lastIndexOf('/') + 1);
+	  var trueOrigin = cordova.file.dataDirectory + name;
+	  return trueOrigin;
+	}
+});
 ;

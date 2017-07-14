@@ -2,18 +2,18 @@
 	<ion-content class="padding">
 
 <img id="userimg"  src="" height="120px" width="120px">
-Michael Henry Lumanta<br>
+<div ng-controller="session1" style=" position: absolute; top: 90px; right:200px;"> {{item}}</div>
 <label class="item item-input">
 		<i class="icon ion-ios-search placeholder-icon"></i>
-		<input type="text" placeholder="Search Report" ng-model="search">
+		<input type="text" placeholder="Search Report" ng-model="search1">
 </label>
-<div ng-controller='Search'>
+<div ng-controller='Search1'>
 <div class="list" style="box-shadow: 4px 4px 4px grey;">
-<div class="item item-icon-right" ng-repeat="item in items | filter:search">
+<div class="item item-icon-right" ng-repeat="item in items | filter:search1">
 	<table>
 		<tr>
 			<td>
-<label ng-model="studentId">{{item.StudentId}}</label>
+<label ng-model="studentId">{{item.Student_Id}}</label>
 </td>
 </tr>
 <tr>
@@ -23,7 +23,7 @@ Michael Henry Lumanta<br>
 </tr>
 <tr>
 	<td>
-<label ng-model="rep" style="">{{item.description}}</label>
+<label ng-model="rep" style="">{{item.Description}}</label>
 </td>
 </tr>
 <tr>
