@@ -29,4 +29,4 @@ templateUrl:'templates/Menu.html'})
 						    url: '/register',
 
 						    templateUrl: 'templates/register.html'})
-$urlRouterProvider.otherwise('/LogIn'); });
+$urlRouterProvider.otherwise('/What'); });
