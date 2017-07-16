@@ -300,7 +300,7 @@ catch(e)
 	 $scope.three=false;
  };
 })
-.controller('PictureCtrl', function($scope, $cordovaCamera,$cordovaFile) {
+.controller('PictureCtrl', function($scope,$cordovaCamera,$cordovaFile) {
 	$scope.images = [];
 
 	$scope.addImage = function() {
