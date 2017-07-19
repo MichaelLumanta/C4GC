@@ -1,4 +1,58 @@
-angular.module('starter.controllers',['ionic','ngCordova'])
+angular.module('starter.controllers',['ionic','ngCordova','ngCordova.plugins.camera','ngCordova.plugins'])
+.run(function($ionicPlatform) {
+  $ionicPlatform.ready(function() {
+    if(window.cordova && window.cordova.plugins.Keyboard) {
+      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+      // for form inputs)
+      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+
+      // Don't remove this line unless you know what you are doing. It stops the viewport
+      // from snapping when text inputs are focused. Ionic handles this internally for
+      // a much nicer keyboard experience.
+      cordova.plugins.Keyboard.disableScroll(true);
+    }
+    if(window.StatusBar) {
+      StatusBar.styleDefault();
+    }
+  });
+})
+.factory('$cordovaCamera', ['$q', function ($q) {
+
+    return {
+      getPicture: function (options) {
+        var q = $q.defer();
+
+        if (!navigator.camera) {
+          q.resolve(null);
+          return q.promise;
+        }
+
+        navigator.camera.getPicture(function (imageData) {
+          q.resolve(imageData);
+        }, function (err) {
+          q.reject(err);
+        }, options);
+
+        return q.promise;
+      },
+
+      cleanup: function () {
+        var q = $q.defer();
+
+        navigator.camera.cleanup(function () {
+          q.resolve();
+        }, function (err) {
+          q.reject(err);
+        });
+
+        return q.promise;
+      }
+    };
+  }])
+
+//Pages Controller
+
+
 .controller('Search',function($scope,$http)
 {$scope.saved=localStorage.getItem('reports');
 	$scope.items=(localStorage.getItem('reports')!=null)?JSON.parse($scope.saved):[{title:'',done:false}];
@@ -17,7 +71,7 @@ function updates(){$scope.saved=localStorage.getItem('reports');
 { $scope.items=(localStorage.getItem('accounts'));
 $scope.item=JSON.parse($scope.items)[0].account;
 
-	 var url="db/select.php?report&account='"+$scope.item+"'";
+	 var url="http://192.168.1.12/c4GC/db/select.php?report&account='"+$scope.item+"'";
 $http.get(url).success(function(response){
 	$scope.items=response;
 
@@ -37,7 +91,7 @@ $http.get(url).success(function(response){
 		 $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
 
 		$http({
-			url:"http://localhost/c4gc/db/insert.php?report",
+			url:"http://192.168.1.12/c4GC/db/insert.php?report",
 			method: "POST",
 			data:{
 			'report': $scope.report,
@@ -114,7 +168,7 @@ $scope.saved=localStorage.getItem('accounts');
 	$scope.account=(localStorage.getItem('accounts')!=null)?JSON.parse($scope.saved):[{accounts:'',done:false}];
 
 $http({
-	url:"http://localhost/c4gc/db/insert.php?report",
+	url:"http://192.168.1.12/c4gc/db/insert.php?report",
 	method: "POST",
 	data:{
 	'report': $scope.desc,
@@ -140,12 +194,12 @@ $http({
 
  $scope.submit= function(){
 
-		var url="db/select.php?studentaccounts&username="+$scope.username+"&password="+$scope.password+"";
-		$http.get(url).success(function(response){
+		var url="http://192.168.1.12/c4GC/db/select.php?studentaccounts&username="+$scope.username+"&password="+$scope.password+"";
+		$http.post(url).success(function(response){
 			$scope.accounts=response;
 
  			if($scope.accounts=="Error: Data not Found..")
-			{var url="db/select.php?guest&username='"+$scope.username+"'&password='"+$scope.password+"'";
+			{var url="http://192.168.1.12/c4GC/db/select.php?guest&username='"+$scope.username+"'&password='"+$scope.password+"'";
 		$http.get(url).success(function(response){
 			$scope.accounts=response;
 
@@ -180,7 +234,7 @@ $scope.Register=function(){
 
 	$scope.username=$scope.User;
 	$scope.password=$scope.password;
-	var url="db/select.php?guests&username='"+$scope.username+"'";
+	var url="http://192.168.1.12/c4GC/db/select.php?guests&username='"+$scope.username+"'";
 	$http.get(url).success(function(response){
 	$scope.accounts=response;
 
@@ -192,7 +246,7 @@ $scope.Register=function(){
 	});
 
 
-	var url="db/select.php?guestsname&username='"+$scope.Name+"'";
+	var url="http://192.168.1.12/c4GC/db/select.php?guestsname&username='"+$scope.Name+"'";
 	$http.get(url).success(function(response){
 	$scope.account=response;
 
@@ -222,7 +276,7 @@ else if ($scope.Pass!=$scope.Password) {
 else {
 
 	$http({
-		url:"http://localhost/c4gc/db/insert.php?register",
+		url:"http://192.168.1.12/c4gc/db/insert.php?register",
 		method: "POST",
 		data:{
 		'Name': $scope.Name,
@@ -300,80 +354,22 @@ catch(e)
 	 $scope.three=false;
  };
 })
-.controller('PictureCtrl', function($scope,$cordovaCamera,$cordovaFile) {
-	$scope.images = [];
 
-	$scope.addImage = function() {
-		// 2
-		var options = {
-			destinationType : Camera.DestinationType.FILE_URI,
-			sourceType : Camera.PictureSourceType.CAMERA, // Camera.PictureSourceType.PHOTOLIBRARY
-			allowEdit : false,
-			encodingType: Camera.EncodingType.JPEG,
-			popoverOptions: CameraPopoverOptions,
-		};
+.controller('CameraCtrl', function ($scope, $cordovaCamera) {
+    $scope.takePicture = function () {
+      var options = {
+        quality: 50,
+        destinationType: Camera.DestinationType.DATA_URL,
+        sourceType: Camera.PictureSourceType.CAMERA
+      };
 
-		// 3
-		$cordovaCamera.getPicture(options).then(function(imageData) {
-
-			// 4
-			onImageSuccess(imageData);
-
-			function onImageSuccess(fileURI) {
-				createFileEntry(fileURI);
-			}
-
-			function createFileEntry(fileURI) {
-				window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
-			}
-
-			// 5
-			function copyFile(fileEntry) {
-				var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
-				var newName = makeid() + name;
-
-				window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(fileSystem2) {
-					fileEntry.copyTo(
-						fileSystem2,
-						newName,
-						onCopySuccess,
-						fail
-					);
-				},
-				fail);
-			}
-
-			// 6
-			function onCopySuccess(entry) {
-				$scope.$apply(function () {
-					$scope.images.push(entry.nativeURL);
-					var output=document.getElementById('userimg');
-			    output.src=$scope.images;
-				});
-			}
-
-			function fail(error) {
-				console.log("fail: " + error.code);
-			}
-
-			function makeid() {
-				var text = "";
-				var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-				for (var i=0; i < 5; i++) {
-					text += possible.charAt(Math.floor(Math.random() * possible.length));
-				}
-				return text;
-			}
-
-		}, function(err) {
-			console.log(err);
-		});
-	}
-	$scope.urlForImage = function(imageName) {
-	  var name = imageName.substr(imageName.lastIndexOf('/') + 1);
-	  var trueOrigin = cordova.file.dataDirectory + name;
-	  return trueOrigin;
-	}
-});
+      // udpate camera image directive
+      $cordovaCamera.getPicture(options).then(function (imageData) {
+        $scope.cameraimage = "data:image/jpeg;base64," + imageData;
+      }, function (err) {
+        console.log('Failed because: ');
+		console.log(err);
+      });
+    };
+  })
 ;

@@ -18,9 +18,10 @@
 		<form class="todo-form "ng-submit="addReport()">
 
 
-<div ng-controller="PictureCtrl">
-<img id="userimg"  src="" height="120px" width="120px" style="display:block;" ng-click="addImage()"> </div>
-<input id="fileholder" type="file" value="Upload" accept="image/x-png,image/jpeg;capture=camera" ng-click="loadFile(event)">
+<div ng-controller="CameraCtrl">
+<img id="userimg"  src="" height="120px" width="120px" style="display:block;" ng-click="takePicture()"> </div>
+</div>
+<input id="fileholder" type="file" value="Upload" accept="image/x-png,image/jpeg;capture=camera" onchange="loadFile(event)">
 
 
 		<br><br>
