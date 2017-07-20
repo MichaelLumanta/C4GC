@@ -13,23 +13,23 @@
 <!-- <div ng-controller="session" ng-model="rep" value="rep">
 </div> -->
 <div class="list" align="center" >
-
+  <div ng-controller="CameraCtrl">
+  <div class="item item-divider">
+          <center>CAPTURE MEMORIES</center>
+        </div>
+        <div class="item item-image">
+          <img class="item" ng-src="{{cameraimage}}" style="height: 300px;"/>
+        </div>
+      </div>
+      <div class="padding">
+        <button class="button button-block button-energized" style=";box-shadow: 0 10px 6px -6px grey;background-color:#ff944d;" ng-click="takePicture()">
+          Take Photo
+        </button>
+      </div>
+</div>
     <div class="container" ng-controller='TodoController'>
 		<form class="todo-form "ng-submit="addReport()">
-      <div ng-controller="CameraCtrl">
-      <div class="item item-divider">
-      				<center>CAPTURE MEMORIES</center>
-      			</div>
-      			<div class="item item-image">
-      				<img class="item" ng-src="{{cameraimage}}" style="height: 300px;"/>
-      			</div>
-      		</div>
-      		<div class="padding">
-      			<a lass="button button-block button-energized" style=";box-shadow: 0 10px 6px -6px grey;background-color:#ff944d;" ng-click="takePicture()">
-      				Take Photo
-      			</a>
-      		</div>
-</div>
+
 <div ng-controller="CameraCtrl">
 <img id="userimg"  src="" height="120px" width="120px" style="display:block;" ng-click="takePicture()"> </div>
 </div>
