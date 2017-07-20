@@ -18,20 +18,18 @@
 		<form class="todo-form "ng-submit="addReport()">
 
 
-<div ng-controller="CameraCtrl">
-<img id="userimg"  src="{{cameraimage}}" height="120px" width="120px" style="display:block;" ng-click="takePicture()"> </div>
+
+<img id="userimg"  src="{{cameraimage}}" height="120px" width="120px" style="display:block;" ng-click="takePicture()" >
 <input id="fileholder" type="file" value="Upload" accept="image/x-png,image/jpeg;capture=camera" onchange="loadFile(event)">
 
 
 		<br><br>
     Pick category of Your Report <br>
-<div>
-
-
     <div>
     <select ng-model="Category" required="" class="item item-input item-select" style="height:30px; width:200px;">
   <option value="Broken Things">Broken Things </option>
   <option value="Student Behavior">Student Behavior </option>
+  <option value="Suggestion">Suggestion</option>
 </select>
    </div>
 <br>
@@ -47,16 +45,10 @@
      <input type="text" ng-model="location" placeholder="Location">
     </label>
   </div>
-  <br>
-  <div class='sid'>
-
-</div>
-
-
-	<br>
 
 	<button type="submit" value="Send Report" class="button button-balanced button-small button-block" style="border-radius:80px;"> Submit</button>
 	</form>
-
+</div>
+</div>
 </ion-view>
 </ion-content>

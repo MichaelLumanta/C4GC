@@ -79,17 +79,37 @@ $http.get(url).success(function(response){
 
 
 })
-.controller('TodoController',function($scope,$http,$state, $ionicHistory){
+.controller('TodoController',function($scope,$http,$state, $ionicHistory, $cordovaCamera){
 	$scope.saved=localStorage.getItem('reports');
 	$scope.reports=(localStorage.getItem('reports')!=null)?JSON.parse($scope.saved):[];
 	localStorage.setItem('reports',JSON.stringify($scope.reports));
-		$scope.addReport1=function(){
+
+  $scope.takePicture = function () {
+    var options = {
+      quality: 50,
+      destinationType: Camera.DestinationType.DATA_URL,
+      sourceType: Camera.PictureSourceType.CAMERA
+    };
+
+    // udpate camera image directive
+    $cordovaCamera.getPicture(options).then(function (imageData) {
+      $scope.cameraimage = "data:image/jpeg;base64," + imageData;
+
+    }, function (err) {
+      console.log('Failed because: ');
+  console.log(err);
+    });
+  };
+
+
+
+  	$scope.addReport1=function(){
 
 			$scope.saved=localStorage.getItem('accounts');
 				$scope.account=(localStorage.getItem('accounts')!=null)?JSON.parse($scope.saved):[{accounts:'',done:false}];
 
 		 $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
-
+alert(document.getElementById('userimg').value);
 		$http({
 			url:"http://192.168.1.12/c4GC/db/insert.php?report",
 			method: "POST",
@@ -97,7 +117,8 @@ $http.get(url).success(function(response){
 			'report': $scope.report,
 			'studentId': $scope.account[0].account,
 			'category': $scope.Category,
-			'location': $scope.location
+			'location': $scope.location,
+      //'image': document.getElementById('userimg').value;
 			}
 		})
 .success(function(response){
@@ -199,7 +220,7 @@ $http({
 			$scope.accounts=response;
 
  			if($scope.accounts=="Error: Data not Found..")
-			{var url="http://192.168.1.12/c4GC/db/select.php?guest&username='"+$scope.username+"'&password='"+$scope.password+"'";
+			{var url="http://192.168.1.12/c4GC/db/select.php?guest&username="+$scope.username+"&password="+$scope.password+"";
 		$http.get(url).success(function(response){
 			$scope.accounts=response;
 
@@ -356,21 +377,6 @@ catch(e)
 })
 
 .controller('CameraCtrl', function ($scope, $cordovaCamera) {
-    $scope.takePicture = function () {
-			alert("Working")
-      var options = {
-        quality: 50,
-        destinationType: Camera.DestinationType.DATA_URL,
-        sourceType: Camera.PictureSourceType.CAMERA
-      };
 
-      // udpate camera image directive
-      $cordovaCamera.getPicture(options).then(function (imageData) {
-        $scope.cameraimage = "data:image/jpeg;base64," + imageData;
-      }, function (err) {
-        console.log('Failed because: ');
-		console.log(err);
-      });
-    };
   })
 ;

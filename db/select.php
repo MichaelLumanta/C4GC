@@ -80,10 +80,11 @@ if(isset($_GET['guest']))
 	$username=($_GET['username']);
 	$password=($_GET['password']);
 	$table= "guests";
-	$sql="Select * FROM $table where Username=".$username." && Password=".$password."";
+	$sql="Select * FROM $table where Username='".$username."' && Password='".$password."'";
 	$result = mysqli_query($con,$sql);
 
 		if(!$result){
+
 		die("Error: Data not Found..");
 		}
 		$data=array();
@@ -109,7 +110,7 @@ if(isset($_GET['guests']))
 	$username=($_GET['username']);
 
 	$table= "guests";
-	$sql="Select * FROM $table where Username=".$username."";
+	$sql="Select * FROM $table where Username='".$username."'";
 	$result = mysqli_query($con,$sql);
 
 		if(!$result){
