@@ -357,6 +357,7 @@ catch(e)
 
 .controller('CameraCtrl', function ($scope, $cordovaCamera) {
     $scope.takePicture = function () {
+			alert("Working")
       var options = {
         quality: 50,
         destinationType: Camera.DestinationType.DATA_URL,
