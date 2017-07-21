@@ -9,9 +9,16 @@ templateUrl:'templates/Menu.html'})
 	,controller:'TodoController'}}})
 
 
-.state('app.Local',{url:'/Local',views:{'menuContent':{templateUrl:'templates/StoredReport.html',controller:'TodoController'}}})
+.state('app.Local',
+{url:'/Local',views:{'menuContent':{
+	templateUrl:'templates/StoredReport.html',
+	controller:'TodoController'}}})
 
-.state('app.Profile',{url:'/Profile',views:{'menuContent':{templateUrl:'templates/Profile.html',controller:'Search'}}})
+	.state('app.UserProfile',
+	{url:'/Prof',views:{'menuContent':{
+		templateUrl:'templates/Profile.html',
+		controller:'Search1'}}})
+
 
 .state('What', {
     url: '/What',

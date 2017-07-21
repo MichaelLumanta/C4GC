@@ -6,7 +6,7 @@
 </label>
 <div ng-controller='Search'>
 <div class="list" style="box-shadow: 4px 4px 4px grey;">
-<div class="item item-icon-right" ng-repeat="item in items | filter:search">
+<div class="item item-icon-right" ng-repeat="item in items | filter:search track by $index">
 	<table>
 		<tr>
 			<td>
@@ -37,10 +37,10 @@
 </tr>
 <tr>
 	<td>
-		<a class="button button-icon icon ion-android-delete" data-ng-click="remove(item)"ng-controller='TodoController' style="position: absolute; right:70px; width: 50px;"></a>
+		<a class="button button-icon icon ion-android-delete" data-ng-click="remove($index)"ng-controller='TodoController' style="position: absolute; right:70px; width: 50px;"></a>
 </td>
 <td>
-	<i class="button button-icon icon ion-android-send" data-ng-click="add(item)"ng-controller='TodoController' style=""></i>
+	<i class="button button-icon icon ion-android-send" data-ng-click="add($index)"ng-controller='TodoController' style=""></i>
 
 </td>
 </tr>

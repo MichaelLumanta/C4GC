@@ -24,11 +24,11 @@ if(isset($_GET['report']))
 {
 	$account=$_GET['account'];
 	$table= "report";
-	$sql="Select * FROM $table where Student_Id=$account ";
+	$sql="Select * FROM $table where Student_Id='".$account."' ";
 	$result = mysqli_query($con,$sql);
 
 		if(!$result){
-		die("Error: Data not Found..");
+	echo json_encode("fail");
 		}
 		$data=array();
 			while ($row= mysqli_fetch_assoc($result))
@@ -52,12 +52,10 @@ if(isset($_GET['studentaccounts']))
 	$username=($_GET['username']);
 	$password=($_GET['password']);
 	$table= "studentaccounts";
-	$sql="Select * FROM $table where StudentID=".$username." && Password=".$password."";
+	$sql="Select * FROM $table where StudentID=".$username." && Password='".$password."'";
 	$result = mysqli_query($con,$sql);
 
-		if(!$result){
-		die("Error: Data not Found..");
-		}
+
 		$data=array();
 	    while ($row= mysqli_fetch_assoc($result))
 		{
@@ -70,8 +68,11 @@ if(isset($_GET['studentaccounts']))
 
 		//);
 		}
+    if(!$result){
+    echo json_encode("fail");
+    }
+    else{echo json_encode($data);}
 
-		echo json_encode($data);
 	mysqli_close($con);
 
 }
@@ -85,7 +86,7 @@ if(isset($_GET['guest']))
 
 		if(!$result){
 
-		die("Error: Data not Found..");
+	echo json_encode("fail");
 		}
 		$data=array();
 	    while ($row= mysqli_fetch_assoc($result))
@@ -114,7 +115,7 @@ if(isset($_GET['guests']))
 	$result = mysqli_query($con,$sql);
 
 		if(!$result){
-		die("Error: Data not Found..");
+		echo json_encode("fail");
 		}
 		$data=array();
 	    while ($row= mysqli_fetch_assoc($result))
@@ -142,7 +143,35 @@ if(isset($_GET['guestsname']))
 	$result = mysqli_query($con,$sql);
 
 		if(!$result){
-		die("Error: Data not Found..");
+		echo json_encode("fail");
+		}
+		$data=array();
+	    while ($row= mysqli_fetch_assoc($result))
+		{
+			array_push($data,$row);
+		//$arr[] = array(
+		// 'Category'=>$row[2],
+		// 'Description'=>$row[3],
+		// 'Student_Id'=>$row[4],
+		// 'Date'=>$row[5]
+
+		//);
+		}
+
+		echo json_encode($data);
+	mysqli_close($con);
+
+}
+if(isset($_GET['profileuser']))
+{
+	$username=($_GET['username']);
+
+	$table= "studentaccounts";
+	$sql="Select img FROM $table where StudentID=".$username."";
+	$result = mysqli_query($con,$sql);
+
+		if(!$result){
+		echo json_encode("fail");
 		}
 		$data=array();
 	    while ($row= mysqli_fetch_assoc($result))

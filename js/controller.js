@@ -75,7 +75,7 @@ $scope.item=JSON.parse($scope.items)[0].account;
 $http.get(url).success(function(response){
 	$scope.items=response;
 
-});
+}).error(function(response){$scope.items=null;});
 
 
 })
@@ -113,7 +113,7 @@ $http.get(url).success(function(response){
 		 $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
 var base64=document.getElementById('userimg').src;
 		$http({
-			url:"http://192.168.1.12/c4GC/db/insert.php?report",
+			url:"http://localhost/c4GC/db/insert.php?report",
 			method: "POST",
 			data:{
 			'report': $scope.report,
@@ -198,7 +198,7 @@ $scope.saved=localStorage.getItem('accounts');
 	$scope.account=(localStorage.getItem('accounts')!=null)?JSON.parse($scope.saved):[{accounts:'',done:false}];
 
 $http({
-	url:"http://192.168.1.12/c4gc/db/insert.php?report",
+	url:"http://localhost/c4gc/db/insert.php?report",
 	method: "POST",
 	data:{
     'imageinput' : base64,
@@ -226,47 +226,43 @@ $http({
 
  $scope.submit= function(){
 
-		var url="http://192.168.1.12/c4GC/db/select.php?studentaccounts&username="+$scope.username+"&password="+$scope.password+"";
+		var url="http://localhost/C4GC/db/select.php?studentaccounts&username="+$scope.username+"&password="+$scope.password+"";
 		$http.post(url).success(function(response){
 			$scope.accounts=response;
 
- 			if($scope.accounts=="Error: Data not Found..")
-			{var url="http://192.168.1.12/c4GC/db/select.php?guest&username="+$scope.username+"&password="+$scope.password+"";
-		$http.get(url).success(function(response){
-			$scope.accounts=response;
-
-			if($scope.accounts.length>0)
-			{
-				$scope.saved=localStorage.getItem('accounts');
-				$scope.reports=(localStorage.getItem('accounts')!=null)?[{account:$scope.username,done:false}]:[{account:$scope.username,done:false}];
-				localStorage.setItem('accounts',JSON.stringify($scope.reports));
-$state.go('Landing');
-
-			}
-			});
-			}
-			else{
 
 					if($scope.username == $scope.accounts[0].StudentID && $scope.password == $scope.accounts[0].Password)
 					{
 						$scope.saved=localStorage.getItem('accounts');
-						$scope.reports=(localStorage.getItem('accounts')!=null)?[{account:$scope.username,done:false}]:[{account:$scope.username,done:false}];
+						$scope.reports=(localStorage.getItem('accounts')!=null)?[{account:$scope.username,Name:$scope.accounts[0].StudentName,guest:false}]:[{account:$scope.username,done:false}];
 						localStorage.setItem('accounts',JSON.stringify($scope.reports));
 		$state.go('Landing');
-					}
+
 		}
 
 
 
 	});
+  var url="http://localhost/c4GC/db/select.php?guest&username="+$scope.username+"&password="+$scope.password+"";
+$http.get(url).success(function(response){
+  $scope.accounts=response;
 
+  if($scope.accounts!=undefined)
+  {
+    $scope.saved=localStorage.getItem('accounts');
+    $scope.reports=(localStorage.getItem('accounts')!=null)?[{account:$scope.username,Name:$scope.accounts[0].StudentName,guest:true}]:[{account:$scope.username,done:false}];
+    localStorage.setItem('accounts',JSON.stringify($scope.reports));
+$state.go('Landing');
+
+  }
+  });
 }
 
 $scope.Register=function(){
 
 	$scope.username=$scope.User;
 	$scope.password=$scope.password;
-	var url="http://192.168.1.12/c4GC/db/select.php?guests&username='"+$scope.username+"'";
+	var url="http://localhost/c4GC/db/select.php?guests&username='"+$scope.username+"'";
 	$http.get(url).success(function(response){
 	$scope.accounts=response;
 
@@ -278,7 +274,7 @@ $scope.Register=function(){
 	});
 
 
-	var url="http://192.168.1.12/c4GC/db/select.php?guestsname&username='"+$scope.Name+"'";
+	var url="http://localhost/c4GC/db/select.php?guestsname&username='"+$scope.Name+"'";
 	$http.get(url).success(function(response){
 	$scope.account=response;
 
@@ -308,7 +304,7 @@ else if ($scope.Pass!=$scope.Password) {
 else {
 
 	$http({
-		url:"http://192.168.1.12/c4gc/db/insert.php?register",
+		url:"http://localhost/c4gc/db/insert.php?register",
 		method: "POST",
 		data:{
 		'Name': $scope.Name,
@@ -340,6 +336,10 @@ else{
 	localStorage.setItem('accounts',JSON.stringify([]));
 	$state.go('LogIn');
 	}
+  $scope.profile = function(){
+
+	$state.go('app.UserProfile');
+	}
 })
 .controller('session',function($scope,$http,$state)
 {$scope.saved=localStorage.getItem('accounts');
@@ -359,11 +359,30 @@ catch(e)
 })
 .controller('session1',function($scope,$http,$state)
 {$scope.saved=localStorage.getItem('accounts');
+$scope.One=true;
 try{
 
-if(JSON.parse($scope.saved)[0].account!=null){
-	$scope.items=(localStorage.getItem('accounts')!="[]")?$state.go('app.Profile'):$state.go('LogIn');
-$scope.item=(JSON.parse($scope.saved)[0].account);
+if(JSON.parse($scope.saved)[0]!=null){
+$scope.item=(JSON.parse($scope.saved)[0]);
+
+if($scope.item.guest)
+{
+
+$scope.One=false;
+}
+else {
+  var url="http://localhost/c4GC/db/select.php?profileuser&username="+$scope.item.account+"";
+  $http.post(url).success(function(response){
+    $scope.accounts=response;
+    var profilepic=document.getElementById('accountimg');
+    profilepic.src=$scope.accounts[0].img;
+  });
+
+
+}
+}
+else {
+  $state.go('LogIn');
 }
 }
 catch(e)
@@ -371,7 +390,31 @@ catch(e)
 	$state.go('LogIn');
 }
 
+$scope.takePicture = function () {
 
+  var options = {
+    quality: 50,
+    destinationType: Camera.DestinationType.DATA_URL,
+    sourceType: Camera.PictureSourceType.CAMERA
+  };
+
+  // udpate camera image directive
+  $cordovaCamera.getPicture(options).then(function (imageData) {
+
+    $scope.cameraimages = "data:image/jpeg;base64," + imageData;
+    var url="http://localhost/c4GC/db/updatepicture.php?updatepic&img=data:image/jpeg;base64,"+imageData+ "&account="+$scope.item.account+" ";
+    $http.post(url).success(function(response){
+      $scope.accounts=response;
+      var profilepic=document.getElementById('accountimg');
+      profilepic.src=$scope.accounts[0].img;
+    });
+  }, function (err) {
+    console.log('Failed because: ');
+console.log(err);
+  });
+
+
+};
 })
 .controller('slide',function($scope,$http)
 {
