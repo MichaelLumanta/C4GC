@@ -144,8 +144,10 @@ reload.src="img/pic.png";
 		var report=$scope.report;
 		var studId=$scope.studentId;
 		if(report==null)
-		{console.log("No Description");}
-	else{$scope.addReport1();}
+		{alert("No Description");}
+	else{
+alert("There are no Connection\nYour Report is stored")
+    $scope.addReport1();}
 	};
 
 
