@@ -138,7 +138,10 @@ var base64=document.getElementById('userimg').src;
 var reload=document.getElementById('userimg');
 reload.src="img/pic.png";
 					}
-                });
+        }).error(function(response){
+          alert("Storing your report");
+          $scope.addToLocal();
+        });
 
 	};
 		$scope.addReport=function(){
