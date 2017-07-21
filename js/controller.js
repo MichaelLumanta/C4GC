@@ -131,6 +131,7 @@ var base64=document.getElementById('userimg').src;
 						 $scope.addToLocal();
 					}
 					else{
+            alert("Your Report is sent to the admin")
 					$scope.report='';
 					$scope.Category='';
 					$scope.location='';
@@ -146,15 +147,16 @@ reload.src="img/pic.png";
 		if(report==null)
 		{alert("No Description");}
 	else{
-alert("There are no Connection\nYour Report is stored")
+
     $scope.addReport1();}
 	};
 
 
 
 	$scope.addToLocal=function(){
+    alert("There are no connection\nYour report is stored")
 	$scope.saved=localStorage.getItem('reports');
-	$scope.reports=(localStorage.getItem('reports')!=null)?JSON.parse($scope.saved):JSON.parse($scope.saved);
+	$scope.reports=(localStorage.getItem('reports')!=null)?JSON.parse($scope.saved):[];
 	localStorage.setItem('reports',JSON.stringify($scope.reports));
 	$scope.saved=localStorage.getItem('accounts');
 		$scope.account=(localStorage.getItem('accounts')!=null)?JSON.parse($scope.saved):[{accounts:'',done:false}];
