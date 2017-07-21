@@ -80,7 +80,9 @@ $http.get(url).success(function(response){
 
 })
 .controller('TodoController',function($scope,$http,$state, $ionicHistory, $cordovaCamera){
-	$scope.saved=localStorage.getItem('reports');
+  $scope.cameraimage = "img/pic.png";
+
+  $scope.saved=localStorage.getItem('reports');
 	$scope.reports=(localStorage.getItem('reports')!=null)?JSON.parse($scope.saved):[];
 	localStorage.setItem('reports',JSON.stringify($scope.reports));
 
@@ -109,7 +111,7 @@ $http.get(url).success(function(response){
 				$scope.account=(localStorage.getItem('accounts')!=null)?JSON.parse($scope.saved):[{accounts:'',done:false}];
 
 		 $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
-alert(document.getElementById('userimg').value);
+var base64=document.getElementById('userimg').src;
 		$http({
 			url:"http://192.168.1.12/c4GC/db/insert.php?report",
 			method: "POST",
@@ -118,6 +120,7 @@ alert(document.getElementById('userimg').value);
 			'studentId': $scope.account[0].account,
 			'category': $scope.Category,
 			'location': $scope.location,
+      'imageinput' :base64
       //'image': document.getElementById('userimg').value;
 			}
 		})
@@ -151,15 +154,17 @@ alert(document.getElementById('userimg').value);
 	localStorage.setItem('reports',JSON.stringify($scope.reports));
 	$scope.saved=localStorage.getItem('accounts');
 		$scope.account=(localStorage.getItem('accounts')!=null)?JSON.parse($scope.saved):[{accounts:'',done:false}];
-
+var base64=document.getElementById('userimg').src;
 
 
 		var report= $scope.report;
 			$scope.reports.push({
+        image:base64,
 				category:$scope.Category,
 				description:$scope.report,
 				location:$scope.location,
 				StudentId:$scope.account[0].account,
+
 				done:false
 			});
 	    $scope.Category='';

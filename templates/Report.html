@@ -19,7 +19,7 @@
 
 
 
-<img id="userimg"  src="{{cameraimage}}" height="120px" width="120px" style="display:block;" ng-click="takePicture()" >
+<img id="userimg"  ng-src="{{cameraimage}}" height="120px" width="120px" style="display:block;" ng-click="takePicture()" ng-model="imagetry" >
 <input id="fileholder" type="file" value="Upload" accept="image/x-png,image/jpeg;capture=camera" onchange="loadFile(event)">
 
 
