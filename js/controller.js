@@ -71,7 +71,7 @@ function updates(){$scope.saved=localStorage.getItem('reports');
 { $scope.items=(localStorage.getItem('accounts'));
 $scope.item=JSON.parse($scope.items)[0].account;
 
-	 var url="http://192.168.1.12/c4GC/db/select.php?report&account='"+$scope.item+"'";
+	 var url="http://127.0.0.1/c4GC/db/select.php?report&account="+$scope.item+"";
 $http.get(url).success(function(response){
 	$scope.items=response;
 
@@ -134,6 +134,8 @@ var base64=document.getElementById('userimg').src;
 					$scope.report='';
 					$scope.Category='';
 					$scope.location='';
+var reload=document.getElementById('userimg');
+reload.src="img/pic.png";
 					}
                 });
 
@@ -169,7 +171,8 @@ var base64=document.getElementById('userimg').src;
 			});
 	    $scope.Category='';
 			$scope.report='';
-
+      var reload=document.getElementById('userimg');
+      reload.src="img/pic.png";
 			$scope.location='';
 			localStorage.setItem('reports',JSON.stringify($scope.reports));
 
@@ -182,7 +185,7 @@ var base64=document.getElementById('userimg').src;
 
 	 $scope.reports.splice(item,1);
 	localStorage.setItem('reports', JSON.stringify($scope.reports));
-
+$state.go('app.Local');
 
 	};
 	$scope.add=function(item){
@@ -190,6 +193,7 @@ $scope.desc=item.description;
 
 $scope.category=item.category;
 $scope.location=item.location;
+var base64 = item.image;
 $scope.saved=localStorage.getItem('accounts');
 	$scope.account=(localStorage.getItem('accounts')!=null)?JSON.parse($scope.saved):[{accounts:'',done:false}];
 
@@ -197,6 +201,7 @@ $http({
 	url:"http://192.168.1.12/c4gc/db/insert.php?report",
 	method: "POST",
 	data:{
+    'imageinput' : base64,
 	'report': $scope.desc,
 	'studentId': $scope.account[0].account,
 'category': $scope.category,
@@ -207,6 +212,7 @@ $http({
 	{
 		$scope.reports.splice(item,1);
 	 localStorage.setItem('reports', JSON.stringify($scope.reports));
+   $state.go('app.Local');
 	}
 
 

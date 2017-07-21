@@ -9,7 +9,7 @@ templateUrl:'templates/Menu.html'})
 	,controller:'TodoController'}}})
 
 
-.state('app.Local',{url:'/Local',views:{'menuContent':{templateUrl:'templates/StoredReport.html',controller:'Search'}}})
+.state('app.Local',{url:'/Local',views:{'menuContent':{templateUrl:'templates/StoredReport.html',controller:'TodoController'}}})
 
 .state('app.Profile',{url:'/Profile',views:{'menuContent':{templateUrl:'templates/Profile.html',controller:'Search'}}})
 
