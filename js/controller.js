@@ -127,7 +127,7 @@ var base64=document.getElementById('userimg').src;
 .success(function(response){
 
 					if(response.match("fail"))
-					{
+					{alert("Storing your report");
 						 $scope.addToLocal();
 					}
 					else{
