@@ -3,11 +3,17 @@
 
 
 
-<div ng-show="One">
+<div ng-controller="session1"ng-show="One">
+		<input id="fileholder" type="file" value="Upload" accept="image/x-png,image/jpeg;capture=camera" onchange="loadIt(event)">
+		<a ng-click="updatepic()" value="Send Report" class="button button-balanced button-small button-block" style="border-radius:80px; width:100px;" ng-controller="session1"> Change Pic</a>
+
 	<img ng-controller="session1" id="accountimg"src="{{account.img}}" height="120px" width="120px" ng-click="takePicture() " >
-		<div ng-controller="session1" style=" position: absolute; top: 70px; right:115px;"> {{item.account}} <br>{{item.Name}}</div>
-	</div>
+</div>
+		<div ng-controller="session1" style=" position: absolute; top: 70px; right:115px;"> <br><br><br><br><br><br>{{item.account}} <br>{{item.Name}}</div>
+
+	<br><br>
 	<label class="item item-input">
+
 			<i class="icon ion-ios-search placeholder-icon"></i>
 			<input type="text" placeholder="Search Report" ng-model="search1">
 	</label>

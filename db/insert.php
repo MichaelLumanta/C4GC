@@ -49,7 +49,7 @@ if(isset($_GET['register']))
   $Name=$request->Name;
   $User=$request->User;
   $Pass=$request->Pass;
-  $query="INSERT INTO guests(ID,img,Username,Password,FullName) VALUES('','','".$User."','".$Pass."','".$Name."')";
+  $query="INSERT INTO guests(ID,Username,Password,FullName) VALUES('','".$User."','".$Pass."','".$Name."')";
 $result=  mysqli_query($con,$query);
 if(!$result){
 echo json_encode("fail");}

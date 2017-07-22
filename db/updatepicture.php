@@ -23,14 +23,22 @@ if (isset($_SERVER['HTTP_ORIGIN'])) {
     if(isset($_GET['updatepic']))
     {
 
-    $account=$_GET['account'];
-    $img=$_GET['img'];
-      $query="Update studentaccounts SET img='".$img."' where StudentID=".$account."";
-    $result=  mysqli_query($con,$query);
-    if(!$result){
-    echo json_encode("fail");}
-    else{
-      echo json_encode("Worked");
-    }
+
+  $postdata = file_get_contents("php://input");
+  $request = json_decode($postdata);
+  $account = $request->studentId;
+
+  $img=$request->imageinput;
+
+
+  $query="Update studentaccounts SET img='".$img."' where StudentID=".$account."";
+  $result=mysqli_query($con,$query);
+
+  if(!$result){
+  echo json_encode("fail");}
+  else{
+    echo json_encode("Worked");
+  }
+
       }
  ?>

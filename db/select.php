@@ -139,7 +139,7 @@ if(isset($_GET['guestsname']))
 	$username=($_GET['username']);
 
 	$table= "guests";
-	$sql="Select * FROM $table where FullName=".$username."";
+	$sql="Select * FROM $table where FullName='".$username."'";
 	$result = mysqli_query($con,$sql);
 
 		if(!$result){

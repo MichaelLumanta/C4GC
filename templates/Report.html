@@ -10,8 +10,8 @@
 <ion-view view-title="Report">
 <ion-content class="padding">
 
-<!-- <div ng-controller="session" ng-model="rep" value="rep">
-</div> -->
+<div ng-controller="session" ng-model="rep" value="rep">
+</div>
 <div class="list" align="center" >
 
     <div class="container" ng-controller='TodoController'>
@@ -19,11 +19,11 @@
 
 
 
-<img id="userimg"  ng-src="{{cameraimage}}" height="120px" width="120px" style="display:block;" ng-click="takePicture()" >
+<img id="userimg"  ng-src="{{cameraimage}}" height="200px" width="200px" style="display:block;" ng-click="takePicture()" >
 <input id="fileholder" type="file" value="Upload" accept="image/x-png,image/jpeg;capture=camera" onchange="loadFile(event)">
 
 
-		<br><br>
+		<!-- <br><br>
     Pick category of Your Report <br>
     <div>
     <select ng-model="Category" required="" class="item item-input item-select" style="height:30px; width:200px;">
@@ -32,7 +32,7 @@
   <option value="Suggestion">Suggestion</option>
 </select>
    </div>
-<br>
+<br> -->
     <div class='reporting'>
 
 		 <label class="item item-input">

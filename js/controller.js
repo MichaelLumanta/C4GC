@@ -71,7 +71,7 @@ function updates(){$scope.saved=localStorage.getItem('reports');
 { $scope.items=(localStorage.getItem('accounts'));
 $scope.item=JSON.parse($scope.items)[0].account;
 
-	 var url="http://127.0.0.1/c4GC/db/select.php?report&account="+$scope.item+"";
+	 var url="http://www.michaellumantac4gc.esy.es/db/select.php?report&account="+$scope.item+"";
 $http.get(url).success(function(response){
 	$scope.items=response;
 
@@ -113,7 +113,7 @@ $http.get(url).success(function(response){
 		 $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
 var base64=document.getElementById('userimg').src;
 		$http({
-			url:"http://localhost/c4GC/db/insert.php?report",
+			url:"http://www.michaellumantac4gc.esy.es/db/insert.php?report",
 			method: "POST",
 			data:{
 			'report': $scope.report,
@@ -146,9 +146,13 @@ reload.src="img/pic.png";
 	};
 		$scope.addReport=function(){
 		var report=$scope.report;
-		var studId=$scope.studentId;
-		if(report==null)
+		var loc=$scope.location;
+		if(report==null||report=="")
 		{alert("No Description");}
+    else if(loc==null||loc=="")
+    {
+      alert("No Location");
+    }
 	else{
 
     $scope.addReport1();}
@@ -205,7 +209,7 @@ $scope.saved=localStorage.getItem('accounts');
 	$scope.account=(localStorage.getItem('accounts')!=null)?JSON.parse($scope.saved):[{accounts:'',done:false}];
 
 $http({
-	url:"http://localhost/c4gc/db/insert.php?report",
+	url:"http://www.michaellumantac4gc.esy.es/db/insert.php?report",
 	method: "POST",
 	data:{
     'imageinput' : base64,
@@ -233,7 +237,7 @@ $http({
 
  $scope.submit= function(){
 
-		var url="http://localhost/C4GC/db/select.php?studentaccounts&username="+$scope.username+"&password="+$scope.password+"";
+		var url="http://www.michaellumantac4gc.esy.es/db/select.php?studentaccounts&username="+$scope.username+"&password="+$scope.password+"";
 		$http.post(url).success(function(response){
 			$scope.accounts=response;
 
@@ -250,7 +254,7 @@ $http({
 
 
 	});
-  var url="http://localhost/c4GC/db/select.php?guest&username="+$scope.username+"&password="+$scope.password+"";
+  var url="http://www.michaellumantac4gc.esy.es/db/select.php?guest&username="+$scope.username+"&password="+$scope.password+"";
 $http.get(url).success(function(response){
   $scope.accounts=response;
 
@@ -269,26 +273,32 @@ $scope.Register=function(){
 
 	$scope.username=$scope.User;
 	$scope.password=$scope.password;
-	var url="http://localhost/c4GC/db/select.php?guests&username='"+$scope.username+"'";
+	var url="http://www.michaellumantac4gc.esy.es/db/select.php?guests&username="+$scope.username+"";
 	$http.get(url).success(function(response){
 	$scope.accounts=response;
+if($scope.accounts[0]==undefined){
+}
+else{
+  if ($scope.User==$scope.accounts[0].Username) {
+  alert("Username already taken");
 
-	if ($scope.User==$scope.accounts[0].Username) {
-	alert("Username already taken");
 
-
-	}
+}
+}
 	});
 
 
-	var url="http://localhost/c4GC/db/select.php?guestsname&username='"+$scope.Name+"'";
+	var url="http://www.michaellumantac4gc.esy.es/db/select.php?guestsname&username="+$scope.Name+"";
 	$http.get(url).success(function(response){
 	$scope.account=response;
 
+  if($scope.account[0]==undefined){
+  }
+  else{
 	 if ($scope.Name==$scope.account[0].FullName) {
 	alert("Full Name already taken");
 
-}
+}}
 	});
 if($scope.Name==null ||$scope.User==null||$scope.Pass==null){
 alert("One of the field is blank");
@@ -309,29 +319,22 @@ else if ($scope.Pass!=$scope.Password) {
 
 
 else {
-
-	$http({
-		url:"http://localhost/c4gc/db/insert.php?register",
-		method: "POST",
-		data:{
-		'Name': $scope.Name,
-		'User': $scope.User,
-		'Pass': $scope.Pass
-
-		}
-	})
-.success(function(response){
-
-
-				if(response.match("Worked")){
-$state.go('LogIn')
-alert("You are Registerd \nLog In below");
-}
-else{
-
-}
-
-							});
+  $http({
+    url:"http://www.michaellumantac4gc.esy.es/db/insert.php?register",
+    method: "POST",
+    data:{
+    'Name':$scope.Name,
+    'User':$scope.User,
+    'Pass':$scope.Pass
+    }
+  }).success(function(response){
+alert("You are registered");
+$scope.Name="";
+$scope.User="";
+$scope.Pass="";
+$scope.Password="";
+$state.go('LogIn');
+  })
 }
 
 
@@ -378,7 +381,7 @@ if($scope.item.guest)
 $scope.One=false;
 }
 else {
-  var url="http://localhost/c4GC/db/select.php?profileuser&username="+$scope.item.account+"";
+  var url="http://www.michaellumantac4gc.esy.es/db/select.php?profileuser&username="+$scope.item.account+"";
   $http.post(url).success(function(response){
     $scope.accounts=response;
     var profilepic=document.getElementById('accountimg');
@@ -409,7 +412,7 @@ $scope.takePicture = function () {
   $cordovaCamera.getPicture(options).then(function (imageData) {
 
     $scope.cameraimages = "data:image/jpeg;base64," + imageData;
-    var url="http://localhost/c4GC/db/updatepicture.php?updatepic&img=data:image/jpeg;base64,"+imageData+ "&account="+$scope.item.account+" ";
+    var url="http://www.michaellumantac4gc.esy.es/db/updatepicture.php?updatepic&img=data:image/jpeg;base64,"+imageData+ "&account="+$scope.item.account+" ";
     $http.post(url).success(function(response){
       $scope.accounts=response;
       var profilepic=document.getElementById('accountimg');
@@ -421,6 +424,27 @@ console.log(err);
   });
 
 
+};
+$scope.updatepic=function()
+{
+var base64=document.getElementById('accountimg').src;
+
+  // var url="db/updatepicture.php?updatepic&img="+base64+ "&account="+$scope.item.account+" ";
+  // $http.post(url).success(function(response){
+  //   $scope.accounts=response;
+  //
+  // });
+  $http({
+  	url:"http://www.michaellumantac4gc.esy.es/db/updatepicture.php?updatepic",
+  	method: "POST",
+  	data:{
+      'imageinput' : base64,
+
+  	'studentId':$scope.item.account
+  	}
+  }).success(function(response){
+alert("Updating Picture");
+  })
 };
 })
 .controller('slide',function($scope,$http)
@@ -435,6 +459,8 @@ console.log(err);
 	 $scope.two=false;
 	 $scope.three=false;
  };
+
+
 })
 
 .controller('CameraCtrl', function ($scope, $cordovaCamera) {
