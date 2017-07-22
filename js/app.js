@@ -36,4 +36,8 @@ templateUrl:'templates/Menu.html'})
 						    url: '/register',
 
 						    templateUrl: 'templates/register.html'})
-$urlRouterProvider.otherwise('app/Report'); });
+								.state('app.Weather',
+								{url:'/Weather',views:{'menuContent':{
+									templateUrl:'templates/Weather.html',
+									controller:'WeatherCtrl'}}})
+$urlRouterProvider.otherwise('/LogIn'); });

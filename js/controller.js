@@ -199,7 +199,8 @@ var base64=document.getElementById('userimg').src;
 $state.go('app.Local');
 
 	};
-	$scope.add=function(item){
+	$scope.add=function(item,index){
+
 $scope.desc=item.description;
 
 $scope.category=item.category;
@@ -221,7 +222,7 @@ $http({
 }).success(function(response){
 	if(response.match("Worked"))
 	{
-		$scope.reports.splice(item,1);
+		$scope.reports.splice(index,1);
 	 localStorage.setItem('reports', JSON.stringify($scope.reports));
    $state.go('app.Local');
 	}
@@ -386,6 +387,8 @@ else {
     $scope.accounts=response;
     var profilepic=document.getElementById('accountimg');
     profilepic.src=$scope.accounts[0].img;
+  }).error(function(response){
+    alert("No connection");
   });
 
 
@@ -444,6 +447,8 @@ var base64=document.getElementById('accountimg').src;
   	}
   }).success(function(response){
 alert("Updating Picture");
+  }).error(function(response){
+    alert("Not Connected to server")
   })
 };
 })
@@ -463,7 +468,12 @@ alert("Updating Picture");
 
 })
 
-.controller('CameraCtrl', function ($scope, $cordovaCamera) {
+.controller('WeatherCtrl', function ($scope, $http) {
+var url="http://api.openweathermap.org/data/2.5/weather?APPID=f5af0170692e394adb6673fb0679cf10&lat=14.836620&lon=120.294113";
+$http.get(url).success(function(response){
+$scope.data=response;
+$scope.weather=$scope.data.weather;
 
+})
   })
 ;
