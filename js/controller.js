@@ -473,6 +473,9 @@ var url="http://api.openweathermap.org/data/2.5/weather?APPID=f5af0170692e394adb
 $http.get(url).success(function(response){
 $scope.data=response;
 $scope.weather=$scope.data.weather;
+$scope.class="Class is NOT Suspended";
+}).error(function(response){
+  alert("No Connection");
 
 })
   })
