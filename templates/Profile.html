@@ -2,14 +2,14 @@
 <ion-content class="padding">
 
 
-
-<div ng-controller="session1"ng-show="One">
+<div ng-controller="session1">
+<div ng-show="One">
 		<input id="fileholder" type="file" value="Upload" accept="image/x-png,image/jpeg;capture=camera" onchange="loadIt(event)">
-		<a ng-click="updatepic()" value="Send Report" class="button button-balanced button-small button-block" style="border-radius:80px; width:100px;" ng-controller="session1"> Change Pic</a>
+		<a ng-click="updatepic()" value="Send Report" class="button button-balanced button-small button-block" style="border-radius:80px; width:100px;" > Change Pic</a>
 
-	<img ng-controller="session1" id="accountimg"src="{{account.img}}" height="120px" width="120px" ng-click="takePicture() " >
+	<img  id="accountimg"src="{{account.img}}" height="120px" width="120px" ng-click="takePicture() " >
 </div>
-		<div ng-controller="session1" style=" position: absolute; top: 70px; right:115px;"> <br><br><br><br><br><br>{{item.account}} <br>{{item.Name}}</div>
+		<div  style=" position: absolute; top: 70px; right:115px;"> <br><br><br><br><br><br>{{item.account}} <br>{{item.Name}}</div>
 
 	<br><br>
 	<label class="item item-input">
@@ -51,5 +51,6 @@
 
 	</div>
 	</div>
+</div>
 </ion-view>
 </ion-content>
