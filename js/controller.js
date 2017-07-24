@@ -71,7 +71,7 @@ function updates(){$scope.saved=localStorage.getItem('reports');
 { $scope.items=(localStorage.getItem('accounts'));
 $scope.item=JSON.parse($scope.items)[0].account;
 
-	 var url="db/select.php?report&account="+$scope.item+"";
+	 var url="http://www.michaellumantac4gc.esy.es/db/select.php?report&account="+$scope.item+"";
 $http.get(url).success(function(response){
 	$scope.items=response;
 
@@ -240,7 +240,7 @@ $http({
 
  $scope.submit= function(){
 
-		var url="db/select.php?studentaccounts&username="+$scope.username+"&password="+$scope.password+"";
+		var url="http://www.michaellumantac4gc.esy.es/db/select.php?studentaccounts&username="+$scope.username+"&password="+$scope.password+"";
 		$http.post(url).success(function(response){
 			$scope.accounts=response;
 
@@ -257,7 +257,7 @@ $http({
 
 
 	});
-  var url="db/select.php?guest&username="+$scope.username+"&password="+$scope.password+"";
+  var url="http://www.michaellumantac4gc.esy.es/db/select.php?guest&username="+$scope.username+"&password="+$scope.password+"";
 $http.get(url).success(function(response){
   $scope.accounts=response;
 
@@ -276,7 +276,7 @@ $scope.Register=function(){
 
 	$scope.username=$scope.User;
 	$scope.password=$scope.password;
-	var url="db/select.php?guests&username="+$scope.username+"";
+	var url="http://www.michaellumantac4gc.esy.es/db/select.php?guests&username="+$scope.username+"";
 	$http.get(url).success(function(response){
 	$scope.accounts=response;
 if($scope.accounts[0]==undefined){
@@ -291,7 +291,7 @@ else{
 	});
 
 
-	var url="db/select.php?guestsname&username="+$scope.Name+"";
+	var url="http://www.michaellumantac4gc.esy.es/db/select.php?guestsname&username="+$scope.Name+"";
 	$http.get(url).success(function(response){
 	$scope.account=response;
 
@@ -384,7 +384,7 @@ if($scope.item.guest)
 $scope.One=false;
 }
 else {
-  var url="db/select.php?profileuser&username="+$scope.item.account+"";
+  var url="http://www.michaellumantac4gc.esy.es/db/select.php?profileuser&username="+$scope.item.account+"";
   $http.post(url).success(function(response){
     $scope.accounts=response;
     var profilepic=document.getElementById('accountimg');
@@ -417,7 +417,7 @@ $scope.takePicture = function () {
   $cordovaCamera.getPicture(options).then(function (imageData) {
 
     $scope.cameraimages = "data:image/jpeg;base64," + imageData;
-    var url="db/updatepicture.php?updatepic&img=data:image/jpeg;base64,"+imageData+ "&account="+$scope.item.account+" ";
+    var url="http://www.michaellumantac4gc.esy.es/db/updatepicture.php?updatepic&img=data:image/jpeg;base64,"+imageData+ "&account="+$scope.item.account+" ";
     $http.post(url).success(function(response){
       $scope.accounts=response;
       var profilepic=document.getElementById('accountimg');
