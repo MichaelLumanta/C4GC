@@ -75,7 +75,9 @@ $scope.item=JSON.parse($scope.items)[0].account;
 $http.get(url).success(function(response){
 	$scope.items=response;
 
-}).error(function(response){$scope.items=null;});
+}).error(function(response){$scope.items=null;
+alert("No Connection");
+});
 
 
 })

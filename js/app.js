@@ -14,7 +14,7 @@ templateUrl:'templates/Menu.html'})
 	templateUrl:'templates/StoredReport.html',
 	controller:'TodoController'}}})
 
-	.state('app.UserProfile',
+	.state('app.Prof',
 	{url:'/Prof',views:{'menuContent':{
 		templateUrl:'templates/Profile.html',
 		controller:'Search1'}}})
