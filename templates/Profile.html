@@ -13,17 +13,17 @@
 
 	<br><br>
 	<label class="item item-input">
-<div ng-controller='Search1'>
-			<i class="icon ion-ios-search placeholder-icon"></i>
-			<input type="text" placeholder="Search Report" ng-model="search2">
-	</label>
 
+			<i class="icon ion-ios-search placeholder-icon"></i>
+			<input type="text" placeholder="Search Report" ng-model="search1">
+	</label>
+	<div ng-controller='Search1'>
 	<div class="list" style="box-shadow: 4px 4px 4px grey;">
-	<div class="item item-icon-right" ng-repeat="item in items | filter:search2 track by $index">
+	<div class="item item-icon-right" ng-repeat="item in items | filter:search1 track by $index">
 		<table>
 			<tr>
 				<td>
-	<img ng-src="{{item.Image}}" height="120px" width="120px" style="display:block;" >
+	<img ng-src="{{item.Image}}" height="120px" width="120px" style="display:block;" ng-click="takePicture()" >
 	</td>
 	</tr>
 	<tr>
