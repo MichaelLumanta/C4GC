@@ -38,6 +38,6 @@ templateUrl:'templates/Menu.html'})
 						    templateUrl: 'templates/register.html'})
 								.state('app.Weather',
 								{url:'/Weather',views:{'menuContent':{
-									templateUrl:'templates/Weather.html',
+									templateUrl:'templates/weather.html',
 									controller:'WeatherCtrl'}}})
 $urlRouterProvider.otherwise('/LogIn'); });
