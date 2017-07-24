@@ -14,7 +14,7 @@ templateUrl:'templates/Menu.html'})
 	templateUrl:'templates/StoredReport.html',
 	controller:'TodoController'}}})
 
-	.state('app.Prof',
+	.state('app.UserProfile',
 	{url:'/Prof',views:{'menuContent':{
 		templateUrl:'templates/Profile.html',
 		controller:'Search1'}}})
@@ -38,6 +38,6 @@ templateUrl:'templates/Menu.html'})
 						    templateUrl: 'templates/register.html'})
 								.state('app.Weather',
 								{url:'/Weather',views:{'menuContent':{
-									templateUrl:'templates/weather.html',
+									templateUrl:'templates/Weather.html',
 									controller:'WeatherCtrl'}}})
 $urlRouterProvider.otherwise('/LogIn'); });
