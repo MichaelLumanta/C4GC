@@ -1,4 +1,4 @@
-angular.module('starter.controllers',['ionic','ngCordova','ngCordova.plugins.camera','ngCordova.plugins','ngCordova.plugins.keyboard'])
+angular.module('starter.controllers',['ionic','ngCordova','ngCordova.plugins.camera','ngCordova.plugins'])
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -75,9 +75,7 @@ $scope.item=JSON.parse($scope.items)[0].account;
 $http.get(url).success(function(response){
 	$scope.items=response;
 
-}).error(function(response){$scope.items=null;
-alert("No Connection");
-});
+}).error(function(response){$scope.items=null;});
 
 
 })
@@ -115,7 +113,7 @@ alert("No Connection");
 		 $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
 var base64=document.getElementById('userimg').src;
 		$http({
-			url:"db/insert.php?report",
+			url:"http://www.michaellumantac4gc.esy.es/db/insert.php?report",
 			method: "POST",
 			data:{
 			'report': $scope.report,
@@ -212,7 +210,7 @@ $scope.saved=localStorage.getItem('accounts');
 	$scope.account=(localStorage.getItem('accounts')!=null)?JSON.parse($scope.saved):[{accounts:'',done:false}];
 
 $http({
-	url:"db/insert.php?report",
+	url:"http://www.michaellumantac4gc.esy.es/db/insert.php?report",
 	method: "POST",
 	data:{
     'imageinput' : base64,
@@ -323,7 +321,7 @@ else if ($scope.Pass!=$scope.Password) {
 
 else {
   $http({
-    url:"db/insert.php?register",
+    url:"http://www.michaellumantac4gc.esy.es/db/insert.php?register",
     method: "POST",
     data:{
     'Name':$scope.Name,
@@ -337,7 +335,7 @@ $scope.User="";
 $scope.Pass="";
 $scope.Password="";
 $state.go('LogIn');
-  })
+  }).error(function(response){alert("Can't connect to server");});
 }
 
 
@@ -440,7 +438,7 @@ var base64=document.getElementById('accountimg').src;
   //
   // });
   $http({
-  	url:"db/updatepicture.php?updatepic",
+  	url:"http://www.michaellumantac4gc.esy.es/db/updatepicture.php?updatepic",
   	method: "POST",
   	data:{
       'imageinput' : base64,
