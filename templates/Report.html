@@ -11,7 +11,7 @@
 <div ng-controller="session" ng-model="rep" value="rep">
 <div class="list" align="center" >
     <div class="container" ng-controller='TodoController'>
-		<form class="todo-form "ng-submit="addReport()">
+		<form class="todo-form "ng-submit="addReport()" keyboard-attach>
       <img id="userimg"  ng-src="{{cameraimage}}" height="200px" width="200px" style="display:block; " ng-click="takePicture()" >
       <input id="fileholder" type="file" value="Upload" accept="image/x-png,image/jpeg;capture=camera" onchange="loadFile(event)">
 		<br>
