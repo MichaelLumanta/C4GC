@@ -250,6 +250,9 @@ alert("It will take a moment to LogIn");
 		$state.go('Landing');
 
 		}
+    else{
+      alert("Wrong Username or Password");
+    }
 
 
 
