@@ -4,14 +4,17 @@
 
 <div ng-controller="session1">
 <div ng-show="One">
+
 		<input id="fileholder" type="file" value="Upload" accept="image/x-png,image/jpeg;capture=camera" onchange="loadIt(event)">
 		<a ng-click="updatepic()" value="Send Report" class="button button-balanced button-small button-block" style="border-radius:80px; width:100px;" > Change Pic</a>
 
 	<img  id="accountimg"src="{{account.img}}" height="120px" width="120px" ng-click="takePicture() " >
 </div>
-		<div  style=" position: absolute; top: 70px; right:115px;"> <br><br><br><br><br><br>{{item.account}} <br>{{item.Name}}</div>
+		<div  style=" position: absolute; top: 70px; right:115px;"> <br><br><br><br><br><br></div>
 
-	<br><br>
+	<label class="item item">
+		{{item.account}} <br>{{item.Name}}
+	</label>
 	<label class="item item-input">
 
 			<i class="icon ion-ios-search placeholder-icon"></i>
@@ -42,7 +45,7 @@
 	</td>
 	</tr>
 	<tr>
-		<td>
+		<td>	{{item.Date_Reported}}
 	</td>
 	</tr>
 	</table>

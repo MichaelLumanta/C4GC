@@ -202,7 +202,6 @@ $state.go('app.Local');
 	$scope.add=function(item,index){
 
 $scope.desc=item.description;
-
 $scope.category=item.category;
 $scope.location=item.location;
 var base64 = item.image;
@@ -228,7 +227,7 @@ $http({
 	}
 
 
-})
+}).error(function(response){alert("No Connection");})
 
 //		$scope.reports.splice(item),1);
 //   localStorage.setItem('reports', JSON.stringify($scope.reports));
@@ -237,7 +236,7 @@ $http({
 {
 
  $scope.submit= function(){
-
+alert("It will take a moment to LogIn");
 		var url="http://www.michaellumantac4gc.esy.es/db/select.php?studentaccounts&username="+$scope.username+"&password="+$scope.password+"";
 		$http.post(url).success(function(response){
 			$scope.accounts=response;
@@ -254,7 +253,7 @@ $http({
 
 
 
-	});
+	}).error(function(response){alert("Cannot connect to server");});
   var url="http://www.michaellumantac4gc.esy.es/db/select.php?guest&username="+$scope.username+"&password="+$scope.password+"";
 $http.get(url).success(function(response){
   $scope.accounts=response;
