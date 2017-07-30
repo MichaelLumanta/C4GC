@@ -68,170 +68,15 @@ function updates(){$scope.saved=localStorage.getItem('reports');
 };
 })
 .controller('Search1',function($scope,$http)
-{ $scope.items=(localStorage.getItem('accounts'));
-$scope.item=JSON.parse($scope.items)[0].account;
+{
+  $scope.items=(localStorage.getItem('accounts'));
+  $scope.item=JSON.parse($scope.items)[0].account;
 
-	 var url="http://www.michaellumantac4gc.esy.es/db/select.php?report&account="+$scope.item+"";
-$http.get(url).success(function(response){
-	$scope.items=response;
+    var url="http://www.michaellumantac4gc.esy.es/db/select.php?report&account="+$scope.item+"";
+  $http.get(url).success(function(response){
+   $scope.items=response;
 
-}).error(function(response){$scope.items=null;});
-
-
-})
-.controller('TodoController',function($scope,$http,$state, $ionicHistory, $cordovaCamera){
-  $scope.cameraimage = "img/pic.png";
-
-  $scope.saved=localStorage.getItem('reports');
-	$scope.reports=(localStorage.getItem('reports')!=null)?JSON.parse($scope.saved):[];
-	localStorage.setItem('reports',JSON.stringify($scope.reports));
-
-  $scope.takePicture = function () {
-    var options = {
-      quality: 50,
-      destinationType: Camera.DestinationType.DATA_URL,
-      sourceType: Camera.PictureSourceType.CAMERA
-    };
-
-    // udpate camera image directive
-    $cordovaCamera.getPicture(options).then(function (imageData) {
-      $scope.cameraimage = "data:image/jpeg;base64," + imageData;
-
-    }, function (err) {
-      console.log('Failed because: ');
-  console.log(err);
-    });
-  };
-
-
-
-  	$scope.addReport1=function(){
-
-			$scope.saved=localStorage.getItem('accounts');
-				$scope.account=(localStorage.getItem('accounts')!=null)?JSON.parse($scope.saved):[{accounts:'',done:false}];
-
-		 $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
-var base64=document.getElementById('userimg').src;
-		$http({
-			url:"http://www.michaellumantac4gc.esy.es/db/insert.php?report",
-			method: "POST",
-			data:{
-			'report': $scope.report,
-			'studentId': $scope.account[0].account,
-			'category': $scope.Category,
-			'location': $scope.location,
-      'imageinput' :base64
-      //'image': document.getElementById('userimg').value;
-			}
-		})
-.success(function(response){
-
-					if(response.match("fail"))
-					{alert("Storing your report");
-						 $scope.addToLocal();
-					}
-					else{
-            alert("Your Report is sent to the admin")
-					$scope.report='';
-					$scope.Category='';
-					$scope.location='';
-var reload=document.getElementById('userimg');
-reload.src="img/pic.png";
-					}
-        }).error(function(response){
-          alert("Storing your report");
-          $scope.addToLocal();
-        });
-
-	};
-		$scope.addReport=function(){
-		var report=$scope.report;
-		var loc=$scope.location;
-		if(report==null||report=="")
-		{alert("No Description");}
-    else if(loc==null||loc=="")
-    {
-      alert("No Location");
-    }
-	else{
-
-    $scope.addReport1();}
-	};
-
-
-
-	$scope.addToLocal=function(){
-    alert("There are no connection\nYour report is stored")
-	$scope.saved=localStorage.getItem('reports');
-	$scope.reports=(localStorage.getItem('reports')!=null)?JSON.parse($scope.saved):[];
-	localStorage.setItem('reports',JSON.stringify($scope.reports));
-	$scope.saved=localStorage.getItem('accounts');
-		$scope.account=(localStorage.getItem('accounts')!=null)?JSON.parse($scope.saved):[{accounts:'',done:false}];
-var base64=document.getElementById('userimg').src;
-
-
-		var report= $scope.report;
-			$scope.reports.push({
-        image:base64,
-				category:$scope.Category,
-				description:$scope.report,
-				location:$scope.location,
-				StudentId:$scope.account[0].account,
-
-				done:false
-			});
-	    $scope.Category='';
-			$scope.report='';
-      var reload=document.getElementById('userimg');
-      reload.src="img/pic.png";
-			$scope.location='';
-			localStorage.setItem('reports',JSON.stringify($scope.reports));
-
-
-
-
-	};
-
-	$scope.remove=function(item){
-
-	 $scope.reports.splice(item,1);
-	localStorage.setItem('reports', JSON.stringify($scope.reports));
-$state.go('app.Local');
-
-	};
-	$scope.add=function(item,index){
-
-$scope.desc=item.description;
-$scope.category=item.category;
-$scope.location=item.location;
-var base64 = item.image;
-$scope.saved=localStorage.getItem('accounts');
-	$scope.account=(localStorage.getItem('accounts')!=null)?JSON.parse($scope.saved):[{accounts:'',done:false}];
-
-$http({
-	url:"http://www.michaellumantac4gc.esy.es/db/insert.php?report",
-	method: "POST",
-	data:{
-    'imageinput' : base64,
-	'report': $scope.desc,
-	'studentId': $scope.account[0].account,
-'category': $scope.category,
-'location': $scope.location
-	}
-}).success(function(response){
-	if(response.match("Worked"))
-	{
-		$scope.reports.splice(index,1);
-	 localStorage.setItem('reports', JSON.stringify($scope.reports));
-   $state.go('app.Local');
-	}
-
-
-}).error(function(response){alert("No Connection");})
-
-//		$scope.reports.splice(item),1);
-//   localStorage.setItem('reports', JSON.stringify($scope.reports));
-	};
+  }).error(function(response){$scope.items=null;});
 }).controller('SignIn',function($scope,$http,$state)
 {
 
@@ -247,29 +92,27 @@ alert("It will take a moment to LogIn");
 						$scope.saved=localStorage.getItem('accounts');
 						$scope.reports=(localStorage.getItem('accounts')!=null)?[{account:$scope.username,Name:$scope.accounts[0].StudentName,guest:false}]:[{account:$scope.username,done:false}];
 						localStorage.setItem('accounts',JSON.stringify($scope.reports));
-		$state.go('Landing');
+
+		$state.go('Landing',{},{reload:true});
 
 		}
-    else{
-      alert("Wrong Username or Password");
-    }
 
 
 
-	}).error(function(response){alert("Cannot connect to server");});
+	})
   var url="http://www.michaellumantac4gc.esy.es/db/select.php?guest&username="+$scope.username+"&password="+$scope.password+"";
 $http.get(url).success(function(response){
   $scope.accounts=response;
-
-  if($scope.accounts!=undefined)
+  if($scope.accounts!=undefined|| $scope.account!=[])
   {
     $scope.saved=localStorage.getItem('accounts');
     $scope.reports=(localStorage.getItem('accounts')!=null)?[{account:$scope.username,Name:$scope.accounts[0].StudentName,guest:true}]:[{account:$scope.username,done:false}];
     localStorage.setItem('accounts',JSON.stringify($scope.reports));
-$state.go('Landing');
+
+		$state.go('Landing',{},{reload:true});
 
   }
-  });
+}).error(function(response){alert("Wrong input or No connection")});
 }
 
 $scope.Register=function(){
@@ -371,13 +214,14 @@ catch(e)
 
 })
 .controller('session1',function($scope,$http,$state)
-{$scope.saved=localStorage.getItem('accounts');
+{
+  $scope.saved=localStorage.getItem('accounts');
 $scope.One=true;
 try{
 
 if(JSON.parse($scope.saved)[0]!=null){
+$scope.items1=(JSON.parse($scope.saved)[0]);
 $scope.item=(JSON.parse($scope.saved)[0]);
-
 if($scope.item.guest)
 {
 
@@ -453,6 +297,173 @@ alert("Updating Picture");
     alert("Not Connected to server")
   })
 };
+
+$scope.items=(localStorage.getItem('accounts'));
+$scope.item=JSON.parse($scope.items)[0].account;
+
+  var url="http://www.michaellumantac4gc.esy.es/db/select.php?report&account="+$scope.item+"";
+$http.get(url).success(function(response){
+ $scope.items=response;
+
+}).error(function(response){$scope.items=null;});
+
+
+})
+.controller('TodoController',function($scope,$http,$state, $ionicHistory, $cordovaCamera){
+ $scope.cameraimage = "img/pic.png";
+
+ $scope.saved=localStorage.getItem('reports');
+ $scope.reports=(localStorage.getItem('reports')!=null)?JSON.parse($scope.saved):[];
+ localStorage.setItem('reports',JSON.stringify($scope.reports));
+
+ $scope.takePicture = function () {
+   var options = {
+     quality: 50,
+     destinationType: Camera.DestinationType.DATA_URL,
+     sourceType: Camera.PictureSourceType.CAMERA
+   };
+
+   // udpate camera image directive
+   $cordovaCamera.getPicture(options).then(function (imageData) {
+     $scope.cameraimage = "data:image/jpeg;base64," + imageData;
+
+   }, function (err) {
+     console.log('Failed because: ');
+ console.log(err);
+   });
+ };
+
+
+
+   $scope.addReport1=function(){
+alert("Processing your report");
+     $scope.saved=localStorage.getItem('accounts');
+       $scope.account=(localStorage.getItem('accounts')!=null)?JSON.parse($scope.saved):[{accounts:'',done:false}];
+
+    $http.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
+var base64=document.getElementById('userimg').src;
+   $http({
+     url:"http://www.michaellumantac4gc.esy.es/db/insert.php?report",
+     method: "POST",
+     data:{
+     'report': $scope.report,
+     'studentId': $scope.account[0].account,
+     'category': $scope.Category,
+     'location': $scope.location,
+     'imageinput' :base64
+     //'image': document.getElementById('userimg').value;
+     }
+   })
+.success(function(response){
+
+         if(response.match("fail"))
+         {alert("Storing your report");
+            $scope.addToLocal();
+         }
+         else{
+           alert("Your Report is sent to the admin")
+         $scope.report='';
+         $scope.Category='';
+         $scope.location='';
+var reload=document.getElementById('userimg');
+reload.src="img/pic.png";
+         }
+       }).error(function(response){
+         alert("Storing your report");
+         $scope.addToLocal();
+       });
+
+ };
+   $scope.addReport=function(){
+   var report=$scope.report;
+   var loc=$scope.location;
+   if(report==null||report=="")
+   {alert("No Description");}
+   else if(loc==null||loc=="")
+   {
+     alert("No Location");
+   }
+ else{
+
+   $scope.addReport1();}
+ };
+
+
+
+ $scope.addToLocal=function(){
+   alert("There are no connection\nYour report is stored")
+ $scope.saved=localStorage.getItem('reports');
+ $scope.reports=(localStorage.getItem('reports')!=null)?JSON.parse($scope.saved):[];
+ localStorage.setItem('reports',JSON.stringify($scope.reports));
+ $scope.saved=localStorage.getItem('accounts');
+   $scope.account=(localStorage.getItem('accounts')!=null)?JSON.parse($scope.saved):[{accounts:'',done:false}];
+var base64=document.getElementById('userimg').src;
+
+
+   var report= $scope.report;
+     $scope.reports.push({
+       image:base64,
+       category:$scope.Category,
+       description:$scope.report,
+       location:$scope.location,
+       StudentId:$scope.account[0].account,
+
+       done:false
+     });
+     $scope.Category='';
+     $scope.report='';
+     var reload=document.getElementById('userimg');
+     reload.src="img/pic.png";
+     $scope.location='';
+     localStorage.setItem('reports',JSON.stringify($scope.reports));
+
+
+
+
+ };
+
+ $scope.remove=function(item){
+
+  $scope.reports.splice(item,1);
+ localStorage.setItem('reports', JSON.stringify($scope.reports));
+$state.reload('app.Local');
+alert("Report Deleted");
+ };
+ $scope.add=function(item,index){
+
+$scope.desc=item.description;
+$scope.category=item.category;
+$scope.location=item.location;
+var base64 = item.image;
+$scope.saved=localStorage.getItem('accounts');
+ $scope.account=(localStorage.getItem('accounts')!=null)?JSON.parse($scope.saved):[{accounts:'',done:false}];
+
+$http({
+ url:"http://www.michaellumantac4gc.esy.es/db/insert.php?report",
+ method: "POST",
+ data:{
+   'imageinput' : base64,
+ 'report': $scope.desc,
+ 'studentId': $scope.account[0].account,
+'category': $scope.category,
+'location': $scope.location
+ }
+}).success(function(response){
+
+   $scope.reports.splice(index,1);
+  localStorage.setItem('reports', JSON.stringify($scope.reports));
+  $state.reload('app.Local');
+
+ alert("Report sent to admin");
+
+
+}).error(function(response){alert("Can't connect to server");})
+
+//		$scope.reports.splice(item),1);
+//   localStorage.setItem('reports', JSON.stringify($scope.reports));
+ };
+
+
 })
 .controller('slide',function($scope,$http)
 {
@@ -481,4 +492,12 @@ $scope.class="Class is NOT Suspended";
 
 })
   })
+  .controller('reload', function ($scope, $http,$state) {
+
+
+  $scope.reloadp=function(){
+
+ $state.go('app.UserProfile',{},{reload:true});
+  }
+    })
 ;
